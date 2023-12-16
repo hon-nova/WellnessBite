@@ -1,0 +1,9 @@
+type Query {
+
+   greeting: String
+   sayHello(name: String!): String
+}
+
+type Mutation {
+   createUser(user_id:ID,username:String,email:String,password:String): String
+}

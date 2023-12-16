@@ -1,0 +1,14 @@
+[
+  {
+    "user_id": "64606ea3-19bb-4bf0-9fec-0508b46240d8",
+    "username": "user",
+    "email": "user@user.com",
+    "password": "$2b$10$2KwKzYyfAqNeSNzqYdxaeOhl.6ryn1gUPF2WaPOfnqXaps381jjwq"
+  },
+  {
+    "user_id": "3a6447a6-3d15-4c9a-8568-c94b75ac26fc",
+    "username": "hon",
+    "email": "hon@user.com",
+    "password": "$2b$10$uur9hfUjvupCQZFPd8gFZenzCE6w41pmVXG/THUQC0gE2Tf1Ii43q"
+  }
+]
