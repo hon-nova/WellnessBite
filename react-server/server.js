@@ -58,26 +58,30 @@ app.post('/register', async(req,res)=>{
    if(!username || !email || !password){
       return res.status(400).send("Username, Email and Password are required")
    }
-
    const password_h = await bcrypt.hash(password,10)
-
    try {
-
       const result = await pool.query("INSERT INTO users(username,email,password) VALUES ($1,$2,$3)",[username,email,password_h])
 
       if (result.rowCount >0){
+         console.log('backend: ',result.rows[0].username)
+         console.log('backend: ',result.rows[0].email)
+         console.log('backend: ',result.rows[0].password)
          res.status(201).json({
             dataReturn: result.rows[0],
             successBackend: "Successflly registered."
          })
       }
+   } catch(error){     
+       
+      if (error.code === '23505') {
+         // Unique constraint violation (username or email already exists)
+         return res.status(400).json({ errorBackend: 'Username or email already exists.' });
+      } else {
+         return res.status(500).json({ errorBackend: 'Registration failed.' });
+      }
+      
+}})
 
-   } catch(error){
-
-      console.log('Failed to register user, ',error.message)
-      return res.status(500).json({errorBackend: error.message})
-   }
-})
 
 app.post('/login', async(req,res)=>{
    const {username,password} = req.body

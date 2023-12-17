@@ -6,8 +6,6 @@ const Home = () => {
   // const [isLoggedIn,setIsLoggedIn] = useState(false)
   const {isLoggedIn,loginAuth,logoutAuth} = UseAuth()
 
- 
-
   return (
     <div>
       <Navbar isLogin={isLoggedIn} handleLogin={loginAuth} handleLogout={logoutAuth}/>

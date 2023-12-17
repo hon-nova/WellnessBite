@@ -6,12 +6,8 @@ const Register = () => {
     username:"",
     email:"",
     password:""
-  }
-  const [greeting, setGreeting] = useState("");
-  const [sayHello, setSayHello] = useState("");
-  const [formData,setFormData] = useState(initialForm)
-  const [name, setName] = useState("");
-  
+  } 
+  const [formData,setFormData] = useState(initialForm)  
   const [success, setSuccess] = useState("");
   const [errors,setErrors] =useState({
     username:"",
@@ -21,82 +17,13 @@ const Register = () => {
   })
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
-  const loadGreetingAndSayHello = async (name) => {
-    const response = await fetch("http://localhost:8888/graphql", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
-          query FetchGreetingAndSayHello($name: String!) {
-            greeting
-            sayHello(name: $name)
-          }
-        `,
-        variables: {
-          name: name,
-        },
-      }),
-    });
-
-    const respondBody = await response.json();
-    console.log(respondBody);
-
-    const data = respondBody.data;
-    setGreeting(data.greeting);
-    setSayHello(data.sayHello);
-
-    console.log(data);
-    return data;
-  };
-
-  // const saveUser = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:8888/graphql", {
-  //       method: "POST",
-  //       headers: {
-  //         "content-type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         query: `
-  //           mutation CreateUser($username: String!, $email: String!, $password: String!) {
-  //             createUser(username: $username, email: $email, password: $password)
-  //           }
-  //         `,
-  //         variables: {
-  //           username,
-  //           email,
-  //           password,
-  //         },
-  //       }),
-  //     });
-
-  //     const respondBody = await response.json();
-  //     console.log(respondBody);
-
-  //     // Reset form fields after successful submission
-  //     setFormData(initialForm)
-      
-  //     setMessage("User created successfully!");
-  //     console.log("User created successfully!");
-  //   } catch (error) {
-  //     console.error("Error creating user:", error.message);
-  //   }
-  // };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    loadGreetingAndSayHello(name);
-  };
-
   const checkUsernameExists =async(user_name)=>{
     try {
       const result = await fetch(`http://localhost:8888/username-exists/${user_name}`)
       const dataReturn = await result.json()
       console.log("Username::")
       console.log(dataReturn)
-      if (dataReturn.exists==true){
+      if (dataReturn.exists===true){
         //set error
         setErrors((prevErrors)=>({
           ...prevErrors,
@@ -114,7 +41,7 @@ const Register = () => {
       const dataReturn = await result.json()
       console.log("Email::")
       console.log(dataReturn)
-      if (dataReturn.exists == true){
+      if (dataReturn.exists === true){
         setErrors((prevErrors)=>({
           ...prevErrors,
           email:"The email already exists. Please provide another email."
@@ -125,7 +52,12 @@ const Register = () => {
     }
   }
   const registerUser = async()=>{
-    setErrors("")
+    setErrors({
+    username: "",
+    email: "",
+    password: "",
+    errorBackend: "",
+    })
     //validate user
     if(!formData.username){
       setErrors((prevErrors)=>({
@@ -149,15 +81,14 @@ const Register = () => {
     if(!formData.password){
       setErrors((prevErrors)=>({
         ...prevErrors,
-        password: "password is required."
+        password: "Password is required."
       }))
-    }
-    //convert errors object to an array with Object.key(ErrorsObject)
-    if(Object.keys(errors).length === 0){
-
-      try {        
-  
-        const result = fetch(`http://localhost:8888/register`,{
+    } 
+    
+    console.log(Object.values(errors).every((err)=> err ==='')) //true if errors
+    if(Object.values(errors).every((err)=> err ==='')){
+      try {          
+        const result = await fetch(`http://localhost:8888/register`,{
           method:"POST",
           headers: {
             "content-type": "application/json",
@@ -170,18 +101,23 @@ const Register = () => {
         })
         if (result.status === 201){
           const dataReturn = await result.json()
-          setSuccess(dataReturn.successBackend)
+          console.log("success message register: ")
+          console.log(dataReturn)
+          // setSuccess(dataReturn.successBackend)
+          setSuccess("Successfully Registered.")
           setTimeout(()=>{
             setSuccess("")
           },3000)
           setFormData(initialForm)
-
+        } else if(result.status === 400){
+          console.error('Registration failed:', await result.text());
         }
       } catch(err){
+        // Log the entire response object for debugging
+      console.log('Full response object:', err.response);  
         console.error('Failed registered Frontend')
       }
-    }
-   
+    }     
   }
   const handleInputChange = (e)=>{
     const {name,value}= e.target
@@ -190,36 +126,17 @@ const Register = () => {
       [name]:value
     }))
   }
-
   const handleRegister = (e) => {
     e.preventDefault();
     // saveUser();
     registerUser()
   };
-
   return (
-    <div className="App">
-    <h1>Hello from Frontend</h1>
-    {success && (
-      <p
-        className="alert alert-success mx-auto d-block"
-        style={{ width: "400px" }}
-      >
-        <b>{success}</b>
-      </p>
-    )}
-    <p>{greeting}</p>
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button type="submit">Set Name</button>
-    </form>
-    <h1>{sayHello}</h1>
-    <h1>CREATE AN ACCOUNT</h1>
+    <div className="App" style={{ border:"1px solid grey" }}>  
+    {success && <p className='alert alert-success' style={{ width:"400px" }}>{success}</p>}
+    {errors.errorBackend && <p className='alert alert-danger' style={{ width:"400px" }}>{errors.errorBackend}</p>}   
+    <h1>REGISTER</h1>
+    
     <form onSubmit={handleRegister}>
       {/* username */}
       <label htmlFor="username">Username: </label>
@@ -229,7 +146,7 @@ const Register = () => {
         name="username"
         value={formData.username}
         onChange={handleInputChange}
-      />
+      />{errors.username && <span className='alert alert-warning text-center ml-5' style={{ width:"400px" }}><sup>** </sup>{errors.username}</span>}
       <br />
       {/* email */}
       <label htmlFor="email">Email: </label>
@@ -239,7 +156,7 @@ const Register = () => {
         name="email"
         value={formData.email}
         onChange={handleInputChange}
-      />
+      />{errors.email && <span className='alert alert-warning text-center ml-5' style={{ width:"400px" }}><sup>** </sup>{errors.email}</span>}
       <br />
       {/* password */}
       <label htmlFor="password">Password: </label>
@@ -249,11 +166,11 @@ const Register = () => {
         name="password"
         value={formData.password}
         onChange={handleInputChange}
-      />
+      />{errors.password && <span className='alert alert-warning text-center ml-5' style={{ width:"400px" }}><sup>** </sup>{errors.password}</span>}
       <br />
-      <button type="submit">Submit</button>
+      <button type="submit">REGISTER</button>
     </form>
-    <div>Not registered yet? Please click <a href="/register">here</a> to create one.</div>
+   
   </div>
   )
 }

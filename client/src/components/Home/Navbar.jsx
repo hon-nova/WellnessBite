@@ -1,11 +1,17 @@
 import React from "react";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
+import UseAuth from '../Shared/CustomHooks/UseAuth'
 
-const Navbar = ({isLogin,handleLogin,handleLogout}) => {
+const Navbar = () => {
   const navigateTo = useNavigate()
   // const login = ()=>{
   //   navigateTo(`/login`)
   // }
+  const {isLoggedIn,loginAuth,logoutAuth} = UseAuth()
+  const handleLogin  = (e)=>{
+    e.preventDefault()
+    navigateTo('/login')
+  }
   return (
     <div>
    <nav className="navbar navbar-expand-lg navbar-light bg-light mx-5">
@@ -16,34 +22,40 @@ const Navbar = ({isLogin,handleLogin,handleLogout}) => {
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav mr-auto">
       <li className="nav-item active">
-        <a className="nav-link" href="/activities">Activities</a>
+        <Link className="nav-link" to="/activities">Activities</Link>
       </li>
       <li className="nav-item active">
-        <a className="nav-link" href="/nutritions">Nutritions</a>
+        <Link className="nav-link" to="/nutritions">Nutritions</Link>
       </li>   
     </ul>
     <ul className="navbar-nav">
-    {isLogin ? (<li className="nav-item dropdown">
+    <form 
+      
+      className="form-inline my-2 my-lg-0">       
+      <button      
+      onClick={handleLogin}
+      type="submit"
+      className="btn btn-outline-success my-2 my-sm-0">Log in</button>
+    </form>
+    {/* {isLoggedIn ? (<li className="nav-item dropdown">
         <a className="nav-link dropdown-toggle" href="/profile" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Email Address
         </a>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a className="dropdown-item" href="/profile">My Profile</a>
-          <a className="dropdown-item" href="/change-password">Change Password</a>
+          <Link className="dropdown-item" to="/profile">My Profile</Link>
+          <Link className="dropdown-item" to="/change-password">Change Password</Link>
           <div className="dropdown-divider"></div>
-          <form onSubmit={handleLogout} className="form-inline my-2 my-lg-0">     
+          <form onSubmit={logoutAuth} className="form-inline my-2 my-lg-0">     
       <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
     </form>         
         </div>
       </li>) : (<form 
-      onSubmit={handleLogin}
-      className="form-inline my-2 my-lg-0">  
-      
-      <button 
-      onClick={navigateTo('/login')}
+      onSubmit={loginAuth}
+      className="form-inline my-2 my-lg-0">       
+      <button      
       type="submit"
       className="btn btn-outline-success my-2 my-sm-0">Log in</button>
-    </form>)   }   
+    </form>)}    */}
       <li>      
     </li>
     </ul>   
