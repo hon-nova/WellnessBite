@@ -31,6 +31,27 @@ app.use(cors(),bodyParser.json())
 const {graphqlHTTP} = require("express-graphql")
 app.use('/graphql',graphqlHTTP({schema,graphiql:true}))
 
+app.get('/username-exists/:user_name',async(req,res)=>{
+   const user_name=req.params
+   //read users
+   const result = await pool.query("SELECT * FROM users WHERE username=$1",[user_name])
+
+   if(result.rows.length >0){
+      return res.json({exists: true})
+   } else {
+      return res.json({exists: false})
+   }
+})
+app.get('/email-exists/:email',async(req,res)=>{
+   const e_mail = req.params
+   //read users
+   const result = await pool.query("SELECT * FROM users WHERE email=$1",[e_mail])
+   if(result.rows.length >0){
+      return res.json({exists:true})
+   } else {
+      return res.json({exists:false})
+   }
+})
 app.post('/register', async(req,res)=>{
    const {username,email,password} = req.body
 
@@ -55,6 +76,17 @@ app.post('/register', async(req,res)=>{
 
       console.log('Failed to register user, ',error.message)
       return res.status(500).json({errorBackend: error.message})
+   }
+})
+
+app.post('/login', async(req,res)=>{
+   const {username,password} = req.body
+   try {
+
+
+   } catch(err){
+      console.log('Failed to login, ',err.message)
+      return res.status(401).json({errorBackend: err.message})
    }
 })
 

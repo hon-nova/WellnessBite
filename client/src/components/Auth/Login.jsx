@@ -18,14 +18,12 @@ const Login = () => {
 
     return true
   }
-
-
   const handleLoginPage =()=>{
 
   }
   return (
-    <div>
-      <h1>REGISTER</h1>     
+    <div style={{border:"1px solid grey",width:"500px"}} className="text-center px-2 py-2">
+      <h1>LOGIN</h1>     
     <form onSubmit={handleLoginPage}>
       {/* username */}
       <label htmlFor="username">Username: </label>

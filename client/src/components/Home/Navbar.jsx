@@ -1,11 +1,11 @@
 import React from "react";
-import {useNavigation} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 const Navbar = ({isLogin,handleLogin,handleLogout}) => {
-  const navigateTo = useNavigation()
-  const login = ()=>{
-    navigateTo(`/login`)
-  }
+  const navigateTo = useNavigate()
+  // const login = ()=>{
+  //   navigateTo(`/login`)
+  // }
   return (
     <div>
    <nav className="navbar navbar-expand-lg navbar-light bg-light mx-5">
@@ -37,9 +37,10 @@ const Navbar = ({isLogin,handleLogin,handleLogout}) => {
         </div>
       </li>) : (<form 
       onSubmit={handleLogin}
-      className="form-inline my-2 my-lg-0">     
+      className="form-inline my-2 my-lg-0">  
+      
       <button 
-      onClick={login}
+      onClick={navigateTo('/login')}
       type="submit"
       className="btn btn-outline-success my-2 my-sm-0">Log in</button>
     </form>)   }   
