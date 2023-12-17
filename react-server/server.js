@@ -62,13 +62,11 @@ app.post('/register', async(req,res)=>{
    try {
       const result = await pool.query("INSERT INTO users(username,email,password) VALUES ($1,$2,$3)",[username,email,password_h])
 
-      if (result.rowCount >0){
-         console.log('backend: ',result.rows[0].username)
-         console.log('backend: ',result.rows[0].email)
-         console.log('backend: ',result.rows[0].password)
+      console.log('query result.rows-->',result.rows)
+      if (result.rowCount >0){       
          res.status(201).json({
             dataReturn: result.rows[0],
-            successBackend: "Successflly registered."
+            successBackend: "Successfully registered."
          })
       }
    } catch(error){     
@@ -77,16 +75,13 @@ app.post('/register', async(req,res)=>{
          // Unique constraint violation (username or email already exists)
          return res.status(400).json({ errorBackend: 'Username or email already exists.' });
       } else {
-         return res.status(500).json({ errorBackend: 'Registration failed.' });
-      }
-      
+         return res.status(500).json({ errorBackend: 'REGISTER FAILED BACKEND.' });
+      }      
 }})
-
 
 app.post('/login', async(req,res)=>{
    const {username,password} = req.body
    try {
-
 
    } catch(err){
       console.log('Failed to login, ',err.message)
