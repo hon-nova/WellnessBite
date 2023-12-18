@@ -3,13 +3,10 @@ import {useNavigate, Link} from 'react-router-dom'
 import {AuthContext} from '../contexts/AuthProvider'
 
 const Navbar = () => {
-  const navigateTo = useNavigate()
-  // const location = useLocation()
-
-  // const [isLoggedIn,setIsLoggedIn] = useState(false)
+  const navigateTo = useNavigate()  
+  
   const [token,setToken] =useState("")
-  const {isLoggedIn,email,username,loginSuccess,logout}=useContext(AuthContext)
- 
+  const {isLoggedIn,email,username,loginSuccess,logout}=useContext(AuthContext) 
   
   useEffect(()=>{
      const storedToken = sessionStorage.getItem('token');

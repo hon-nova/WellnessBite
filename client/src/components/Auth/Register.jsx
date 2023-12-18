@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import "../../css/login.css"
 const Register = () => {
   const navigateTo = useNavigate();
   const initialForm = {
@@ -133,7 +133,12 @@ const Register = () => {
     registerUser();
   };
   return (
-    <div className="App" style={{ border: "1px solid grey" }}>
+    <div style={{ marginTop:"60px", backgroundColor:"	#F8F8F8" }}>
+        <div className='row mx-5'>
+     <div className='col-md-1'></div>
+      <div className='col-md-4' style={{ backgroundColor:"#D0D0D0" }}>     
+      <div className="px-2 py-2 login-form"> 
+      <h1>REGISTER</h1>
       {success && (
         <p className="alert alert-success" style={{ width: "400px" }}>
           {success}
@@ -144,17 +149,16 @@ const Register = () => {
           {errors.errorBackend}
         </p>
       )}
-      <h1>REGISTER</h1>
-
       <form onSubmit={handleRegister}>
         {/* username */}
-        <label htmlFor="username">Username: </label>
+        <label htmlFor="username">Username: </label><br/>
         <input
           type="text"
           id="username"
           name="username"
           value={formData.username}
           onChange={handleInputChange}
+          className='input-login'
         />
         {errors.username && (
           <span
@@ -167,13 +171,14 @@ const Register = () => {
         )}
         <br />
         {/* email */}
-        <label htmlFor="email">Email: </label>
+        <label htmlFor="email">Email: </label><br/>
         <input
           type="email"
           id="email"
           name="email"
           value={formData.email}
           onChange={handleInputChange}
+          className='input-login'
         />
         {errors.email && (
           <span
@@ -186,14 +191,15 @@ const Register = () => {
         )}
         <br />
         {/* password */}
-        <label htmlFor="password">Password: </label>
+        <label htmlFor="password">Password: </label><br/>
         <input
           type="password"
           id="password"
           name="password"
           value={formData.password}
           onChange={handleInputChange}
-        />
+          className='input-login'
+        /><br/>
         {errors.password && (
           <span
             className="alert alert-warning text-center ml-5"
@@ -204,10 +210,19 @@ const Register = () => {
           </span>
         )}
         <br />
-        <button type="submit">REGISTER</button>
+        <button type="submit" className="button-login">REGISTER</button>
       </form>
+      </div>
+
+    
+  </div>
+      <div className='col-md-6'>
+      <img src="/assets/images/register.jpg" alt="" width={800} height={600}/></div>
+      <div className='col-md-1'></div>
     </div>
-  );
+    </div>
+  )
+   
 };
 
 export default Register;

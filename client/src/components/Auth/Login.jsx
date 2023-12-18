@@ -1,6 +1,7 @@
 import React, {useState,useContext} from 'react'
 import { useNavigate} from "react-router-dom";
 import { AuthContext } from '../contexts/AuthProvider';
+import "../../css/login.css"
 
 const Login = () => {
   
@@ -69,7 +70,11 @@ const Login = () => {
     }   
   }
   return (
-    <div style={{ border: "1px solid grey", width: "800px" }} className="text-center px-2 py-2">
+    <div style={{ marginTop:"60px", backgroundColor:"	#F8F8F8" }}>
+  <div className='row mx-5'>
+     <div className='col-md-1'></div>
+      <div className='col-md-4' style={{ backgroundColor:"	#D0D0D0" }}>
+      <div className="px-2 py-2 login-form">
       <h1>LOGIN</h1>
       {success && <p className='alert alert-success'>{success}</p>}
       {errors.errorBackend && (
@@ -79,13 +84,14 @@ const Login = () => {
       )}
       <form onSubmit={handleLoginPage} method="post">
         {/* username */}
-        <label htmlFor="username">Username: </label>
+        <label htmlFor="username">Username: </label><br/>
         <input
           type="text"
           id="username"
           name="username"
           value={formData.username}
           onChange={handleInputChange}
+          className='input-login'
         />
         {errors.username && (
           <span
@@ -98,14 +104,15 @@ const Login = () => {
         )}
         <br />
         {/* password */}
-        <label htmlFor="password">Password: </label>
+        <label htmlFor="password">Password: </label><br/>
         <input
           type="password"
           id="password"
           name="password"
           value={formData.password}
           onChange={handleInputChange}
-        />
+          className='input-login'
+        /><br/>
         {errors.password && (
           <span
             className="alert alert-warning text-center ml-5"
@@ -116,10 +123,18 @@ const Login = () => {
           </span>
         )}
         <br />
-        <button type="submit">LOGIN</button>
+        <button type="submit" className='button-login'>LOGIN</button>
       </form>
       <div>Not registered yet? Please click <a href="/register">here</a> to create one.</div>
+    </div></div>
+      <div className='col-md-6'>
+        <img src="/assets/images/login.jpg" alt="" width={800} height={600}/>
+      </div>
+      <div className='col-md-1'></div>
     </div>
+    </div>
+  
+   
   );
   
 }
