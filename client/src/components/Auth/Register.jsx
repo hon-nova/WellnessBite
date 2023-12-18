@@ -135,7 +135,7 @@ const Register = () => {
   return (
     <div style={{ marginTop:"60px", backgroundColor:"	#F8F8F8" }}>
         <div className='row mx-5'>
-     <div className='col-md-1'></div>
+     {/* <div className='col-md-1'></div> */}
       <div className='col-md-4' style={{ backgroundColor:"#D0D0D0" }}>     
       <div className="px-2 py-2 login-form"> 
       <h1>REGISTER</h1>
@@ -151,7 +151,15 @@ const Register = () => {
       )}
       <form onSubmit={handleRegister}>
         {/* username */}
-        <label htmlFor="username">Username: </label><br/>
+        <label htmlFor="username">Username: </label> {errors.username && (
+          <span
+            className="alert alert-warning text-center ml-5"
+            style={{ width: "400px" }}
+          >
+            <small><sup>** </sup>
+            {errors.username}</small>
+          </span>
+        )}<br/>
         <input
           type="text"
           id="username"
@@ -160,18 +168,18 @@ const Register = () => {
           onChange={handleInputChange}
           className='input-login'
         />
-        {errors.username && (
+       
+        <br />
+        {/* email */}
+        <label htmlFor="email">Email: </label>{errors.email && (
           <span
             className="alert alert-warning text-center ml-5"
             style={{ width: "400px" }}
           >
-            <sup>** </sup>
-            {errors.username}
+            <small><sup>** </sup>
+            {errors.email}</small>
           </span>
-        )}
-        <br />
-        {/* email */}
-        <label htmlFor="email">Email: </label><br/>
+        )}<br/>
         <input
           type="email"
           id="email"
@@ -179,19 +187,18 @@ const Register = () => {
           value={formData.email}
           onChange={handleInputChange}
           className='input-login'
-        />
-        {errors.email && (
+        />        
+        <br />
+        {/* password */}
+        <label htmlFor="password">Password: </label>{errors.password && (
           <span
             className="alert alert-warning text-center ml-5"
             style={{ width: "400px" }}
           >
-            <sup>** </sup>
-            {errors.email}
+            <small><sup>** </sup>
+            {errors.password}</small>
           </span>
-        )}
-        <br />
-        {/* password */}
-        <label htmlFor="password">Password: </label><br/>
+        )}<br/>
         <input
           type="password"
           id="password"
@@ -200,15 +207,7 @@ const Register = () => {
           onChange={handleInputChange}
           className='input-login'
         /><br/>
-        {errors.password && (
-          <span
-            className="alert alert-warning text-center ml-5"
-            style={{ width: "400px" }}
-          >
-            <sup>** </sup>
-            {errors.password}
-          </span>
-        )}
+        
         <br />
         <button type="submit" className="button-login">REGISTER</button>
       </form>

@@ -1,9 +1,9 @@
 import React, {useState,createContext} from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 export const AuthContext = createContext()
 
 const AuthProvider = ({children})=>{
-
+   const navigateTo = useNavigate()   
    const [isLoggedIn,setIsLoggedIn]= useState(false)
    const[email,setEmail] =useState("")
    const [username,setUsername] =useState("")
@@ -16,7 +16,7 @@ const AuthProvider = ({children})=>{
    const logout = ()=>{
       setIsLoggedIn(false)       
       sessionStorage.removeItem('token');
-         // navigateTo('/');      
+      navigateTo('/');      
    }
    return (
       <AuthContext.Provider value={{ isLoggedIn,email,username,loginSuccess,logout }}>

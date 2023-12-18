@@ -1,16 +1,13 @@
-
 import React from 'react'
 import Navbar from './Navbar'
 
-
-const Profile = () => {
-   
+const Nutritions = () => {
   return (
-   <div>
+    <div>
       <Navbar/>
-      <h1>My Profile</h1>
+      <h1>Nutritions</h1>
     </div>
   )
 }
 
-export default Profile
+export default Nutritions
