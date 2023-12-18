@@ -3,6 +3,8 @@ const cors = require('cors')
 const express = require('express')
 const {Pool} = require("pg")
 const bcrypt =require('bcrypt')
+const crypto = require("crypto")
+const jwt = require("jsonwebtoken")
 
 require('dotenv').config();
 
@@ -13,7 +15,6 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
 });
-
 
 const port = process.env.PORT || 8888
 const app = express()
@@ -82,13 +83,36 @@ app.post('/register', async(req,res)=>{
 app.post('/login', async(req,res)=>{
    const {username,password} = req.body
    try {
+      //1 read
+      const result = await pool.query("SELECT * FROM users WHERE username=$1",[username])
+
+      const user = await result.rows[0]
+      if(!user){
+         return res.status(400).json({errorBackend: "Invalid username or password"})
+      } 
+      //2 compare
+      const isPasswordValid = await bcrypt.compare(password,user.password)
+
+      if(!isPasswordValid){
+         return res.status(401).json({errorBackend:"Password is incorrect. Please try again."})
+      }
+      //3 take & save JWT
+      const authorKey = process.env.JWT_SECRET
+      const token = jwt.sign({
+         user_id: user.user_id,
+         username: user.username,
+         email: user.email,
+         role: user.role
+      }, authorKey, {expiresIn: "48h"})
+
+      return res.status(201).json({successBackend: "Successfully Logged In.",token: token,user_id:user.user_id,username: user.username,email:user.email})
 
    } catch(err){
       console.log('Failed to login, ',err.message)
-      return res.status(401).json({errorBackend: err.message})
+      return res.status(400).json({errorBackend: err.message})
    }
 })
 
 app.listen(port,()=>{
-   console.info(`Graphql Server on port ${port}`)
+   console.info(`Node Postgres Server on port ${port}`)
 })

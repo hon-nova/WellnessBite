@@ -109,7 +109,7 @@ const Register = () => {
           console.log(dataReturn.successBackend);
           setTimeout(() => {
             navigateTo("/login");
-          }, 3000);
+          }, 2000);
         }
         if (result.status === 400) {
           console.error("Registration failed:", await result.text());

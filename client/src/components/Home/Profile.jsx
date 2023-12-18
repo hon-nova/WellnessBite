@@ -1,13 +1,13 @@
 
-import React, {useState} from 'react'
+import React from 'react'
 import Navbar from './Navbar'
-import UseAuth from '../Shared/CustomHooks/UseAuth'
+
 
 const Profile = () => {
-   const {isLoggedIn,loginAuth,logoutAuth} = UseAuth()
+   
   return (
    <div>
-      <Navbar isLogin={isLoggedIn} handleLogin={loginAuth} handleLogout={logoutAuth}/>
+      <Navbar/>
       <h1>My Profile</h1>
     </div>
   )
