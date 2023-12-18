@@ -7,6 +7,8 @@ import MyInfo from '../User/MyInfo'
 import SavedActivities from '../User/SavedActivities'
 import ChangePassword from '../User/ChangePassword'
 import { AuthContext } from '../contexts/AuthProvider'
+import Footer from '../Home/Footer'
+import DeleteAccount from './DeleteAccount'
 
 const Profile = () => {
    
@@ -24,6 +26,7 @@ const Profile = () => {
           <li><Link to="/profile/my-info">My Info</Link> </li>
           <li><Link to="/profile/saved-activities">Saved Activities</Link> </li>
           <li><Link to="/profile/change-password">Change Password</Link></li>
+          <li><Link to="/profile/delete-account"><b>Delete Account</b></Link></li>
         </ul>
         </div>
         <div className='col-md-7 mr-5'style={{ backgroundColor:"pink" }}>right
@@ -33,10 +36,14 @@ const Profile = () => {
           <Route path="/my-info" element={<MyInfo />}/>
           <Route path="/saved-activities" element={<SavedActivities/>}/>
           <Route path="/change-password" element={<ChangePassword/>}/>
+          <Route path="/delete-account" element={<DeleteAccount/>}/>
           {/* </Route> */}
           
         </Routes>
         </div>
+      </div>
+      <div>
+        <Footer/>
       </div>
     </div>
   )

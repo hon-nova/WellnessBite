@@ -36,12 +36,11 @@ const Navbar = () => {
   },[token])  
 
  const handleLogin  = (e)=>{
-    e.preventDefault()
-    
+    e.preventDefault()    
     navigateTo('/login')
   }
   return (
-    <div>
+    <div style={{ backgroundColor:"#E8E8E8" }}>
    <nav className="navbar navbar-expand-lg navbar-light bg-light mx-5">
   <Link className="navbar-brand" to="/" >
 
@@ -50,8 +49,7 @@ const Navbar = () => {
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav mr-auto">
       <li className="nav-item active">
-      {/*  <Route path="/activities" element={<Activities />}/>  
-          <Route path="/nutritions" element={<Nutritions/>}/>     */}
+
         <Link className="nav-link" to="/activities">ACTIVITIES</Link>
       </li>
       <li className="nav-item active">
@@ -86,5 +84,4 @@ const Navbar = () => {
 </nav></div>
   );
 };
-
 export default Navbar;
