@@ -2,6 +2,7 @@ import React, {useState,useContext} from 'react'
 import { useNavigate} from "react-router-dom";
 import { AuthContext } from '../contexts/AuthProvider';
 import "../../css/login.css"
+import Footer from '../Home/Footer'
 
 const Login = () => {
   
@@ -27,13 +28,11 @@ const Login = () => {
   }
   const handleLoginPage =async (e)=>{
     e.preventDefault()
-      //1 validate user input
-      
+      //1 validate user input      
       const updatedErrors = {
         ...errors,
         username: !formData.username ? "Provide your username!": "",        
-        password: !formData.password ? "Provide a password.": "",
-        
+        password: !formData.password ? "Provide a password.": "",        
       }
       setErrors(updatedErrors)
       if(Object.values(errors).every((err)=> err ==='')){
@@ -52,15 +51,13 @@ const Login = () => {
             })
           })
           const dataBackend = await result.json()
-          if(result.status === 201){
-           
+          if(result.status === 201){           
             const email =dataBackend.email
             console.log(dataBackend.successBackend)
             loginSuccess(formData.username,email)
             if (dataBackend.successBackend === "Successfully Logged In.") {
                 setSuccess(dataBackend.successBackend);
-                console.log(dataBackend.successBackend);
-  
+                console.log(dataBackend.successBackend);  
                 sessionStorage.setItem('token',dataBackend.token)
                 sessionStorage.setItem('user_id',dataBackend.user_id)
                 sessionStorage.setItem('email',dataBackend.email)
@@ -146,6 +143,7 @@ const Login = () => {
       </div>
       <div className='col-md-1'></div>
     </div>
+    <div><Footer/></div>
     </div>
   
    

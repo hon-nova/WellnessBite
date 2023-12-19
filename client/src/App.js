@@ -22,7 +22,7 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/login" element={<Login />}/>    
           <Route path="/activities" element={<Activities />}/>  
-          <Route path="/nutritions" element={<Nutritions/>}/>    
+          <Route path="/nutritions/*" element={<Nutritions/>}/>    
         </Routes>
        </AuthProvider>
         

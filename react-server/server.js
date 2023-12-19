@@ -80,6 +80,7 @@ app.post('/register', async(req,res)=>{
       }      
 }})
 
+// http://localhost:8888/login
 app.post('/login', async(req,res)=>{
    const {username,password} = req.body
    try {

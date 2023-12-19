@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/login.css"
+import Footer from "../Home/Footer";
 const Register = () => {
   const navigateTo = useNavigate();
   const initialForm = {
@@ -206,22 +207,19 @@ const Register = () => {
           value={formData.password}
           onChange={handleInputChange}
           className='input-login'
-        /><br/>
-        
+        /><br/>        
         <br />
         <button type="submit" className="button-login">REGISTER</button>
       </form>
-      </div>
-
-    
+      </div>    
   </div>
       <div className='col-md-6'>
       <img src="/assets/images/register.jpg" alt="" width={800} height={600}/></div>
       <div className='col-md-1'></div>
     </div>
+    <div><Footer/></div>
     </div>
-  )
-   
+  )   
 };
 
 export default Register;

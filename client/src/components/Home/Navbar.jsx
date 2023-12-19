@@ -28,11 +28,11 @@ const Navbar = () => {
           console.log(data)       
           loginSuccess(username,email)
         } catch(err){
-           console.error("Failed to get token::",err.message)
+          //  console.error("Failed to get token::",err.message)
         }
      }  
      getToken()
-     console.log("Token:::",storedToken)    
+    //  console.log("Token:::",storedToken)    
   },[token])  
 
  const handleLogin  = (e)=>{
