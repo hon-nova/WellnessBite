@@ -8,6 +8,7 @@ import Profile from "./components/User/Profile"
 import AuthProvider from "./components/contexts/AuthProvider";
 import Activities from "./components/Home/Activities";
 import Nutritions from "./components/Home/Nutritions";
+import FakeUsers from "./components/User/FakeUsers";
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/login" element={<Login />}/>    
           <Route path="/activities" element={<Activities />}/>  
-          <Route path="/nutritions/*" element={<Nutritions/>}/>    
+          <Route path="/nutritions/*" element={<Nutritions/>}/>  
+          <Route path="/users" element={<FakeUsers />}/>  
         </Routes>
        </AuthProvider>
         

@@ -9,32 +9,32 @@ const imagesArray=[
   {
     name:"Biking",
     photo:"/assets/images/biking.jpg",
-    benefit:""
+    benefit:"Simple. Regular biking strengthens the cardiovascular system, tones muscles, and promotes mental well-being, offering a joyful and effective fitness experience."
   },
   {
     name:"Boxing",
     photo:"/assets/images/boxing.jpg",
-    benefit:""
+    benefit:"Regular boxing workouts enhance cardiovascular health, boost endurance, and improve overall body strength, providing a powerful and energizing exercise routine."
   },
   {
-    name:"Playing Bale",
+    name:"Practising Balle",
     photo:"/assets/images/eight.jpg",
-    benefit:""
+    benefit:"Regular ballet practice enhances strength, posture, and grace, contributing to a sculpted physique and overall physical elegance."
   },
   {
     name:"Pushing up",
     photo:"/assets/images/five.jpg",
-    benefit:""
+    benefit:"Incorporating daily push-ups into your exercise routine enhances upper body strength, tones multiple muscle groups, and contributes to overall functional fitness."
   },
   {
-    name:"Woman Roping",
+    name:"Woman Using Roping",
     photo:"/assets/images/four.jpg",
-    benefit:""
+    benefit:"Engaging in daily exercises with dual ropes offers women an empowering fitness routine, promoting enhanced cardiovascular endurance and muscle toning. The rhythmic coordination required in dual rope workouts not only strengthens the body but also adds an enjoyable and dynamic element to their overall well-being."
   },
   {
-    name:"Man Roping",
+    name:"Using Ropes",
     photo:"/assets/images/roping.jpg",
-    benefit:""
+    benefit:"Incorporating dual rope exercises into your daily routine provides a dynamic and effective way for men to enhance cardiovascular health and build full-body strength. The synchronized movements foster coordination and agility, contributing to a well-rounded and invigorating fitness experience."
   },
   {
     name:"Jogging",
@@ -44,33 +44,33 @@ const imagesArray=[
   {
     name:"Playing Kungfu",
     photo:"/assets/images/six.jpg",
-    benefit:""
+    benefit:"Practicing Kung Fu daily enhances physical fitness, fostering strength, flexibility, and coordination. Additionally, it cultivates mental discipline, promoting focus, resilience, and a harmonious balance between mind and body."
   },
 
   {
     name:"Skating",
     photo:"/assets/images/skating.jpg",
-    benefit:""
+    benefit:"Embrace the joy of daily skating as it not only improves balance, flexibility, and coordination but also infuses your routine with a burst of fun and excitement. Glide through each day with the invigorating benefits of skating, promoting both physical fitness and a cheerful mindset."
   },
   {
     name:"Swimming",
     photo:"/assets/images/swimming.jpg",
-    benefit:""
+    benefit:"Engaging in daily swimming not only promotes cardiovascular health, toning muscles and improving endurance but also provides a refreshing and stress-relieving experience, contributing to overall mental well-being and relaxation. Dive into a daily swim to nurture both physical fitness and mental rejuvenation."
   },
   {
     name:"Running Marathon",
     photo:"/assets/images/three.jpg",
-    benefit:""
+    benefit:"Participating in daily marathon running not only enhances cardiovascular fitness and stamina but also fosters a sense of accomplishment, boosting confidence and mental resilience. Lace up your shoes for a daily marathon to experience the joy of achieving both physical and mental milestones."
   },
   {
     name:"Heavy Weight-lifting",
     photo:"/assets/images/two.jpg",
-    benefit:""
+    benefit:"With each lift, you not only foster robust muscles but also cultivate a powerful mindset that conquers challenges inside and outside the gym."
   },
   {
     name:"Dump-bell",
     photo:"/assets/images/workout.jpg",
-    benefit:""
+    benefit:"Integrate dumbbell exercises into your daily routine to amplify your fitness journey. With these versatile tools, you'll not only sculpt your physique but also enhance your overall strength, boosting both physical and mental well-being."
   },
 
 ]
@@ -81,19 +81,19 @@ const imagesArray=[
         <img src="/assets/images/main.jpg" alt=""/>
       </div>
       <div className='row mb-2'>
-        <h1 className='text-center py-3' style={{ backgroundColor:"lightpink" }}>Most popular sport types</h1>
+        <h1 className='text-center py-3' style={{ backgroundColor:"lightpink" }}>Most popular sports types</h1>
       </div>
-      <div className='row mbx-2 mx-5 text-center' >         
+      <div className='row mb-2 mx-5 text-center' >         
           {imagesArray.length && imagesArray.map((el,index)=>(
             <div className='col-md-4' key={index}>
               <h4>{el.name}</h4>
               <img src={el.photo} width={200} height={180} style={{borderRadius:"50%"}} alt=""/>
-              <div>
-              <p>
-                <a class="btn btn-info" data-bs-toggle="collapse" href={`#collapseExample${index}`} role="button" aria-expanded="false" aria-controls={`collapseExample${index}`}>
-                  Benefits
-                </a>  
-              </p>
+              <div className='mt-2'>
+                <p>
+                  <a class="btn btn-info" data-bs-toggle="collapse" href={`#collapseExample${index}`} role="button" aria-expanded="false" aria-controls={`collapseExample${index}`}>
+                    Benefits
+                  </a>  
+                </p>
               <div class="collapse" id={`collapseExample${index}`}>
                 <div class="card card-body">
                   {<small>{el.benefit}</small>}
@@ -101,11 +101,32 @@ const imagesArray=[
               </div>
               </div>             
             </div>
-          ))}   
-        
+          ))}          
       </div>
       <div className='row mb-2'>
-        <h1 className='text-center py-3' style={{ backgroundColor:"lightblue" }}>Most popular sport types</h1>
+        <h1 className='text-center py-3' style={{ backgroundColor:"lightblue" }}>Courage</h1></div>
+      <div>
+      <div className='row mb-3'>
+        <div className='col-md-1'></div>
+        <div className='col-md-5 px-5 py-5'>
+        <p style={{ fontSize:"27px",fontFamily:"fantasy" }}>
+        Embracing the courage to engage in physical activities, like a simple daily walk or workout, has the power to boost your happiness. The energy you invest in movement not only enhances your physical well-being but also releases feel-good chemicals in your brain, fostering a positive mood. So, lace up those shoes, take a step, and discover the happiness that comes from the simple act of moving your body.
+        </p>
+        
+        </div>
+        <div className='col-md-5'>
+        <img src="/assets/images/ai-generated.png" alt="" width="600px" height="auto"/>
+        </div>
+        <div className='col-md-1'></div>
+      </div>
+      <div className='row mb-2'>
+        <h1 className='text-center py-3' style={{ backgroundColor:"lightgrey" }}>Quotes</h1></div>       
+      </div>
+      <div className='row mb-2'>
+        <div className='col-md-1'>far left</div>
+        <div className='col-md-5'>left</div>
+        <div className='col-md-5'>right</div>
+        <div className='col-md-1'>far right</div>
       </div>
       <div>
         <Footer/>
