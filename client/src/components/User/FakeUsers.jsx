@@ -1,8 +1,10 @@
 import React,{useEffect,useState} from 'react'
 import Papa from 'papaparse'
 
+
 const FakeUsers = () => {
    const [users,setUsers]=useState([])
+
    useEffect(() => {
       const fetchData = async () => {
         const csvFilePath = '/assets/users.csv';
@@ -15,8 +17,8 @@ const FakeUsers = () => {
             header: true,
             complete: (result) => {
               // 'result.data' contains the parsed data
-              console.log("data inside fetchData")
-              console.log(result.data);
+            //   console.log("data inside fetchData")
+            //   console.log(result.data);
               setUsers(result.data)
             },
             error: (error) => {
@@ -27,13 +29,19 @@ const FakeUsers = () => {
           console.error('Error fetching CSV file:', error.message);
         }
       };
-      console.log("data inside useEffect")
-      console.log(users)
       fetchData();
+      
     }, []);
+   //  console.log("data @playground useEffect")
+   //  console.log(users)
+     
   return (
-    <div>
-      {}
+    <div className='quotes'>
+      {users.length && users.map((el,index)=>(
+         <div key={index}>        
+         <img src={el.picture} alt=""/>       
+         </div>
+      ))}
     </div>
   )
 }

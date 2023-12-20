@@ -1,10 +1,51 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import '../../css/home.css'
+import Papa from 'papaparse'
 
 
 const Home = () => {
- 
+
+  const[users,setUsers]=useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const csvFilePath = '/assets/users.csv';
+
+      try {
+        const response = await fetch(csvFilePath);
+        const text = await response.text();
+
+        Papa.parse(text, {
+          header: true,
+          complete: (result) => {
+            // 'result.data' contains the parsed data
+          //   console.log("data inside fetchData")
+          //   console.log(result.data);
+            setUsers(result.data)
+          },
+          error: (error) => {
+            console.error('CSV parsing error:', error.message);
+          },
+        });
+      } catch (error) {
+        console.error('Error fetching CSV file:', error.message);
+      }
+    };
+    fetchData();
+    
+  }, []);
+
+ const quotes=[
+  {
+     "content":"Wellness is the complete integration of body, mind, and spirit – the realization that everything we do, think, feel, and believe has an effect on our state of well-being.",
+     "author":"Greg Anderson"
+  },
+  {
+     "content":"The body is like a piano, and happiness is like music. It is needful to have the instrument in good order.",
+     "author":"Henry Ward Beecher"
+  }]
 const imagesArray=[
   {
     name:"Biking",
@@ -119,15 +160,71 @@ const imagesArray=[
         </div>
         <div className='col-md-1'></div>
       </div>
-      <div className='row mb-2'>
+      <div className='row mb-2 quotes'>
         <h1 className='text-center py-3' style={{ backgroundColor:"lightgrey" }}>Quotes</h1></div>       
       </div>
       <div className='row mb-2'>
         <div className='col-md-1'>far left</div>
-        <div className='col-md-5'>left</div>
-        <div className='col-md-5'>right</div>
+
+
+        {/* here quotes*/}
+       {/* Quotes Carousel */}
+       <div className="col">
+          {quotes.length > 0 && (
+            <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
+              <div className="carousel-indicators">
+                {quotes.map((quote, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide-to={index}
+                    className={index === 0 ? "active" : ""}
+                    aria-current={index === 0}
+                    aria-label={`Slide ${index + 1}`}
+                  ></button>
+                ))}
+              </div>
+              <div className="carousel-inner">
+                {quotes.map((quote, index) => (
+                  <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>        
+
+                    {/* {users.map((user, index2) => (
+            <img key={index2} src={user.picture} 
+            className="d-block w-100" 
+            alt={`User ${index2 + 1}`} style={{ width: "50px", height: "50px", margin: "5px" }} />
+          ))} */}
+                    <div className="carousel-caption d-none d-md-block">
+                      <h5>{quote.content}</h5>
+                      <p>{quote.author}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Next</span>
+              </button>
+            </div>
+          )}
+        </div>
+        {/* End Quotes Carousel */}
+
+        {/* User Images */}
+        {/* <div className="col-md-1">
+          {users.map((user, index) => (
+            <img key={index} src={user.picture} alt={`User ${index + 1}`} style={{ width: "50px", height: "50px", margin: "5px" }} />
+          ))}
+        </div> */}
+        {/* End User Images */}
+        {/* end here */}
+       
         <div className='col-md-1'>far right</div>
-      </div>
+      </div>//end row
       <div>
         <Footer/>
       </div>
