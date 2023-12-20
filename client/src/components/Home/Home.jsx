@@ -130,7 +130,7 @@ const imagesArray=[
     <div>
       <Navbar/>
       <div className='row mb-2'>
-        <img src="/assets/images/main.jpg" alt=""/>
+        <img src="/assets/images/main.jpg" width="auto" height="600px" alt=""/>
       </div>
      
       <div className='row mb-2'>
@@ -216,9 +216,36 @@ const imagesArray=[
         </button>
       </div>
     )}
-  </div>
+    </div>
         {/* End Quotes Carousel */}         
         <div className='col-md-1'>far right</div>
+      </div>
+      <div className='row mb-2'>
+        <h1 className='text-center py-3' style={{ backgroundColor:"lightpink" }}>Other Benefits</h1>
+      </div>
+      <div className='row my-5'>
+        <div className='col-md-1'></div>
+        <div className='col-md-5'> 
+            <iframe
+              title="TRU Job Fair"
+              width="560"
+              height="315"
+              // https://www.youtube.com/watch?v=yKJ3iFX-GCY&ab_channel=CBSNewYork
+              src="https://www.youtube.com/embed/yKJ3iFX-GCY"
+              
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>        
+        </div>
+        <div className='col-md-5 mx-5'>
+          <h3>Study Finds Evening Exercise May Have Extra Health Benefits</h3>
+          <p>CBS New York</p>
+        </div>
+        <div className='col-md-1'></div>
+      </div>
+      <div className='row mb-2'>
+        <h1 className='text-center py-3' style={{ backgroundColor:"lightpink" }}>Contact Info</h1>
       </div>
       <div>
         <Footer/>
