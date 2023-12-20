@@ -8,6 +8,25 @@ import Papa from 'papaparse'
 const Home = () => {
 
   const[users,setUsers]=useState([])
+  const [quotes,setQuotes]= useState([])
+
+  useEffect(()=>{
+    const fetchQuotes = async () => {
+     const result = await fetch('/assets/quotes.json')
+     if (!result.ok) {
+      throw new Error(`HTTP error! Status: ${result.status}`);
+    }
+    const dataRawJson = await result.json();
+    console.log('inside fetchQuotes')
+    console.log('dataRowJson')
+    console.log(dataRawJson)
+    setQuotes(dataRawJson);
+    };
+    fetchQuotes();
+  },{})
+
+  console.log('quotes @playground')
+  console.log(quotes)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,16 +55,8 @@ const Home = () => {
     fetchData();
     
   }, []);
+  console.log('length of quotes::',quotes.length)
 
- const quotes=[
-  {
-     "content":"Wellness is the complete integration of body, mind, and spirit – the realization that everything we do, think, feel, and believe has an effect on our state of well-being.",
-     "author":"Greg Anderson"
-  },
-  {
-     "content":"The body is like a piano, and happiness is like music. It is needful to have the instrument in good order.",
-     "author":"Henry Ward Beecher"
-  }]
 const imagesArray=[
   {
     name:"Biking",
@@ -121,6 +132,7 @@ const imagesArray=[
       <div className='row mb-2'>
         <img src="/assets/images/main.jpg" alt=""/>
       </div>
+     
       <div className='row mb-2'>
         <h1 className='text-center py-3' style={{ backgroundColor:"lightpink" }}>Most popular sports types</h1>
       </div>
@@ -165,66 +177,49 @@ const imagesArray=[
       </div>
       <div className='row mb-2'>
         <div className='col-md-1'>far left</div>
-
-
         {/* here quotes*/}
        {/* Quotes Carousel */}
-       <div className="col">
-          {quotes.length > 0 && (
-            <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
-              <div className="carousel-indicators">
-                {quotes.map((quote, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide-to={index}
-                    className={index === 0 ? "active" : ""}
-                    aria-current={index === 0}
-                    aria-label={`Slide ${index + 1}`}
-                  ></button>
-                ))}
-              </div>
-              <div className="carousel-inner">
-                {quotes.map((quote, index) => (
-                  <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>        
-
-                    {/* {users.map((user, index2) => (
-            <img key={index2} src={user.picture} 
-            className="d-block w-100" 
-            alt={`User ${index2 + 1}`} style={{ width: "50px", height: "50px", margin: "5px" }} />
-          ))} */}
-                    <div className="carousel-caption d-none d-md-block">
-                      <h5>{quote.content}</h5>
-                      <p>{quote.author}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Previous</span>
-              </button>
-              <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Next</span>
-              </button>
-            </div>
-          )}
-        </div>
-        {/* End Quotes Carousel */}
-
-        {/* User Images */}
-        {/* <div className="col-md-1">
-          {users.map((user, index) => (
-            <img key={index} src={user.picture} alt={`User ${index + 1}`} style={{ width: "50px", height: "50px", margin: "5px" }} />
+       <div className="col-md-10" style={{ backgroundColor: "#FFA500",color:"black" }}>
+    {quotes.length > 0 && (
+      <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
+        <div className="carousel-indicators">
+          {quotes.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide-to={index}
+              className={index === 0 ? "active" : ""}
+              aria-current={index === 0}
+              aria-label={`Slide ${index + 1}`}
+            ></button>
           ))}
-        </div> */}
-        {/* End User Images */}
-        {/* end here */}
-       
+        </div>
+        <div className="carousel-inner my-5 py-5">
+          {quotes.map((quote, index) => (
+            <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
+              <img src={users[index % users.length]?.picture} className="d-block max-width-100" alt="Quote Slide" style={{ borderRadius: "50%" }} />
+              <div className="carousel-caption d-none d-md-block" style={{ color:"black" }}>
+                <p style={{ fontFamily:"cursive",fontSize:"20px" }}>{quote.content}</p>
+                <h5>{quote.author}</h5>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Next</span>
+        </button>
+      </div>
+    )}
+  </div>
+        {/* End Quotes Carousel */}         
         <div className='col-md-1'>far right</div>
-      </div>//end row
+      </div>
       <div>
         <Footer/>
       </div>
