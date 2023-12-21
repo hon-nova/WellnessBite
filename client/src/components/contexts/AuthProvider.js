@@ -5,10 +5,10 @@ export const AuthContext = createContext()
 const AuthProvider = ({children})=>{
    const navigateTo = useNavigate()   
    const [isLoggedIn,setIsLoggedIn]= useState(false)
-   const[email,setEmail] =useState("")
-   const [username,setUsername] =useState("")
+   const[email,setEmail] = useState("")
+   const [username,setUsername] = useState("")
    // const navigateTo =useNavigate()
-   const loginSuccess  =(username,email)=>{
+   const loginSuccess  = (username,email)=>{
       setUsername(username)
       setEmail(email)
       setIsLoggedIn(true)

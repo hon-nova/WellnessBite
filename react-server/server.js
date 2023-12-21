@@ -155,6 +155,33 @@ app.post("/change-password", async(req,res,next)=>{
    }
 })
 
+app.post('/save-activity/:activity_id', async(req,res,next)=>{
+
+   const {activity_id}= req.params;  
+   const { user_id, body_part, equipment, gif_url, name, target } = req.body;
+   // Check if the user exists
+   // console.log('user_id-->',user_id)
+   const response0 = await pool.query('SELECT * FROM users WHERE user_id = $1', [user_id]);
+   if (response0.rowCount==0) {
+     return res.status(404).json({ error: 'User not found' });
+   }
+   //SAVE HERE
+   try{
+      console.log("BEFORE SAVE")
+      const response = await pool.query("INSERT INTO user_activities(user_id,activity_id,body_part,equipment,gif_url,name,target) VALUES($1,$2,$3,$4,$5,$6,$7)",[ user_id,activity_id,body_part,equipment,gif_url,name, target])
+      
+      if(response.rowCount>0){
+         res.json({successBackend:"BACKEND SAVED SUCCESSFULLY"})
+      } else {
+         res.status(400).json({errorBackend:"BACKEND FAILED TO SAVE ACTIVITY"})
+      }
+      console.log("END SAVE SUCCESS")
+   } catch(err){
+      console.log('Server Error: ',err.message)
+   }
+
+})
+
 app.listen(port,()=>{
    console.info(`Node Postgres Server on port ${port}`)
 })
