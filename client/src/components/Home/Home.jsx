@@ -120,7 +120,7 @@ const imagesArray=[
     benefit:"With each lift, you not only foster robust muscles but also cultivate a powerful mindset that conquers challenges inside and outside the gym."
   },
   {
-    name:"Dump-bell",
+    name:"Dumb-bells",
     photo:"/assets/images/workout.jpg",
     benefit:"Integrate dumbbell exercises into your daily routine to amplify your fitness journey. With these versatile tools, you'll not only sculpt your physique but also enhance your overall strength, boosting both physical and mental well-being."
   },
