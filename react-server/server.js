@@ -159,8 +159,7 @@ app.post('/save-activity/:activity_id', async(req,res,next)=>{
 
    const {activity_id}= req.params;  
    const { user_id, body_part, equipment, gif_url, name, target } = req.body;
-   // Check if the user exists
-   // console.log('user_id-->',user_id)
+
    const response0 = await pool.query('SELECT * FROM users WHERE user_id = $1', [user_id]);
    if (response0.rowCount==0) {
      return res.status(404).json({ error: 'User not found' });

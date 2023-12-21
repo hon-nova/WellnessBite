@@ -56,34 +56,25 @@ const Activities = () => {
   
   const handleClick =(index)=>{    
     //save a copy of the original array likeStates
-  setLikeStates((prevLikeStates)=>{
-    const newLikeStates = [...prevLikeStates]
-    newLikeStates[index]= {
-      isLike:!newLikeStates[index]?.isLike,
-      count: newLikeStates[index]?.isLike ? (+newLikeStates[index]?.count) + 1 : (+newLikeStates[index]?.count) - 1
-    }
-    if (newLikeStates[index]?.isLike===true){
-      saveActivity(index)
-    }
-    return newLikeStates
-  }) }  
+        setLikeStates((prevLikeStates)=>{
+        const newLikeStates = [...prevLikeStates]
+        newLikeStates[index]= {
+          isLike:!newLikeStates[index]?.isLike,
+          count: newLikeStates[index]?.isLike ? (+newLikeStates[index]?.count) + 1 : (+newLikeStates[index]?.count) - 1
+        }     
+        return newLikeStates
+        }) 
+        if (likeStates?.isLike===true ?  saveActivity(index) : ""){
+         }  
+    } 
 
   const saveActivity = async(activity_id)=>{
     const token = sessionStorage.getItem("token");    
     const decoded = jwtDecode(token);  
     const user_id = decoded.user_id;  
+    const foundActivity = displayArray.filter((element)=>element.id===activity_id)[0]  
     try {
-      console.log("Before save")    
-      const foundActivity = displayArray.filter((element)=>element.id===activity_id)
-      console.log("foundActivity")
-      console.log(foundActivity)    
-      console.log("activity_id::",foundActivity.id) 
-      console.log("body_part::",foundActivity.bodyPart) 
-      console.log("equipment::",foundActivity.equipment)
-      console.log("gifUrl::",foundActivity.gifUrl)
-      console.log("name::",foundActivity.name)
-      console.log("target::",foundActivity.target)
-      
+      console.log("Before save")       
       const response = await fetch(`http://localhost:8888/save-activity/${activity_id}`,{
         method:"POST",
         headers: {
@@ -101,16 +92,16 @@ const Activities = () => {
       })
       const result = await response.json()
       if(response.ok){
-        setSuccess("SUCCESSFULLY saved activity.")
-        // setSuccess(result.successBackend)
+        // setSuccess("SUCCESSFULLY saved activity.")
+        setSuccess(result.successBackend)
       } else {
         if (response.status===400){
-          setErrorBackend("FAILED to save activty")
-          // setErrorBackend(result.errorBackend)
+          // setErrorBackend("FAILED to save activty")
+          setErrorBackend(result.errorBackend)
         }
       }
       console.log("End save")    
-  }
+    }
      catch(err){
       console.log('Failed to save activity FRONTEND::',err.message)
     }
