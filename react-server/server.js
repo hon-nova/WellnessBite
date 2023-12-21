@@ -6,6 +6,7 @@ const bcrypt =require('bcrypt')
 const crypto = require("crypto")
 const jwt = require("jsonwebtoken")
 
+
 require('dotenv').config();
 
 const pool = new Pool({
@@ -64,20 +65,20 @@ app.post('/register', async(req,res)=>{
       const result = await pool.query("INSERT INTO users(username,email,password) VALUES ($1,$2,$3)",[username,email,password_h])
 
       console.log('query result.rows-->',result.rows)
-      if (result.rowCount >0){       
+      if (result.rowCount >0){
          res.status(201).json({
             dataReturn: result.rows[0],
             successBackend: "Successfully registered."
          })
       }
-   } catch(error){     
-       
+   } catch(error){
+
       if (error.code === '23505') {
          // Unique constraint violation (username or email already exists)
          return res.status(400).json({ errorBackend: 'Username or email already exists.' });
       } else {
          return res.status(500).json({ errorBackend: 'REGISTER FAILED BACKEND.' });
-      }      
+      }
 }})
 
 // http://localhost:8888/login
@@ -90,7 +91,7 @@ app.post('/login', async(req,res)=>{
       const user = await result.rows[0]
       if(!user){
          return res.status(400).json({errorBackend: "No records found. Try again."})
-      } 
+      }
       //2 compare
       const isPasswordValid = await bcrypt.compare(password,user.password)
 
@@ -157,7 +158,7 @@ app.post("/change-password", async(req,res,next)=>{
 
 app.post('/save-activity/:activity_id', async(req,res,next)=>{
 
-   const {activity_id}= req.params;  
+   const {activity_id}= req.params;
    const { user_id, body_part, equipment, gif_url, name, target } = req.body;
 
    const response0 = await pool.query('SELECT * FROM users WHERE user_id = $1', [user_id]);
@@ -168,7 +169,7 @@ app.post('/save-activity/:activity_id', async(req,res,next)=>{
    try{
       console.log("BEFORE SAVE")
       const response = await pool.query("INSERT INTO user_activities(user_id,activity_id,body_part,equipment,gif_url,name,target) VALUES($1,$2,$3,$4,$5,$6,$7)",[ user_id,activity_id,body_part,equipment,gif_url,name, target])
-      
+
       if(response.rowCount>0){
          res.json({successBackend:"BACKEND SAVED SUCCESSFULLY"})
       } else {
@@ -180,6 +181,7 @@ app.post('/save-activity/:activity_id', async(req,res,next)=>{
    }
 
 })
+
 
 app.listen(port,()=>{
    console.info(`Node Postgres Server on port ${port}`)
