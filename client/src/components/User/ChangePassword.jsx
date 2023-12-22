@@ -1,5 +1,6 @@
 import React,{useContext,useState} from 'react'
 import { AuthContext } from '../contexts/AuthProvider'
+import '../../css/profile.css'
 
 const ChangePassword = () => {
 
@@ -72,14 +73,17 @@ const handleInputChange =(e)=>{
     }
   }
   return (
-    <div>
+    <div className="col-xs-1 py-2" align="center">
       <h1>Change Password Me</h1>
       {success && <p>{success}</p>}
       {errors.errorBackend && <p className='alert alert-warning'>{errors.errorBackend}</p>}
       <div>
         <form onSubmit={handleChangePassword} method="POST">
-        <label style={{ width:"180px" }}>Current email: </label> <input type="text" name="email" value={email} disabled/><br/>
-        <label style={{ width:"180px" }}>Enter New Password</label><input type="password" name="password" value={formData.password} onChange={handleInputChange}/>{errors.password && (
+        <div className='my-1'><label style={{ width:"180px" }}>Current email: </label> 
+        <input type="text" name="email" value={email} disabled className='input-profile'/><br/></div>
+        <div className='my-1'>
+        <label style={{ width:"180px" }}>Enter New Password</label>
+        <input type="password" name="password" value={formData.password} onChange={handleInputChange} className='input-profile'/>{errors.password && (
           <span
             className="alert alert-warning text-center ml-5"
             style={{ width: "400px" }}
@@ -88,7 +92,12 @@ const handleInputChange =(e)=>{
             {errors.password}</small>
           </span>
         )}<br/>
-        <label style={{ width:"180px" }}>Re-enter New Password</label><input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange}/>{errors.confirmPassword && (
+        </div>
+       <div className='my-1'>
+       <label style={{ width:"180px" }}>Re-enter New Password</label>
+        <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange}
+          className='input-profile'
+        />{errors.confirmPassword && (
           <span
             className="alert alert-warning text-center ml-5"
             style={{ width: "400px" }}
@@ -97,7 +106,9 @@ const handleInputChange =(e)=>{
             {errors.confirmPassword}</small>
           </span>
         )}<br/>
-        <button type="submit">Change Password</button>
+       </div>
+        
+        <label style={{ width:"180px" }}></label> <button type="submit" className='button-profile'>Change Password</button>
         
         </form>
       </div>

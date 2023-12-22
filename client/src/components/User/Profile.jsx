@@ -18,18 +18,18 @@ const Profile = () => {
   return (
    <div>
       <Navbar/>
-      <h1>My Profile</h1>
+      <h1 className="col-xs-1 py-2" align="center">My Profile</h1>
       
       <div className='row mb-3'>
-        <div className='col-md-4 ml-5' style={{ backgroundColor:"lightblue" }}>left
-        <ul>
+        <div className='col-md-3 ml-5' style={{ backgroundColor:"#003366",position:"fixed",height: "100vh", overflowY: "auto" }}>
+        <ul style={{ color:"white",listStyle:"none",fontSize:"20px" }}>
           <li><Link to="/profile/my-info">My Info</Link> </li>
           <li><Link to="/profile/saved-activities">Saved Activities</Link> </li>
           <li><Link to="/profile/change-password">Change Password</Link></li>
-          <li><Link to="/profile/delete-account"><b>Delete Account</b></Link></li>
+          <li ><Link to="/profile/delete-account" style={{ color:"red" }}>Delete Account</Link></li>
         </ul>
         </div>
-        <div className='col-md-7 mr-5'style={{ backgroundColor:"pink" }}>right
+        <div className='col-md-8 mr-5 overflow-auto' style={{ backgroundColor:"pink",marginLeft: "30%",height:"600px"}}>
         
         <Routes>
           {/* <Route path="/profile/*" element={<Profile/>}> */}

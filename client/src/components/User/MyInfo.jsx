@@ -7,7 +7,7 @@ const MyInfo = () => {
   console.log('username::',username)
   return (
     <div>
-      <h1>My Info</h1>
+      <h1 className="col-xs-1 py-2" align="center">My Info</h1>
       <p>Email Contact: <b>{email}</b></p>
       <p>Username: <b>{username}</b></p>
     </div>

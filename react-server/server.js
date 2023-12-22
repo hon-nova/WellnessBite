@@ -154,6 +154,26 @@ app.post("/login", async (req, res) => {
     return res.status(400).json({ errorBackend: err.message });
   }
 });
+
+app.get('/read-saved-activities',async(req,res)=>{
+  try {
+    const stm=`select * from activities 
+    join user_activities on activities.activity_id=user_activities.activity_id 
+    join users on user_activities.user_id=users.user_id
+    where users.user_id=47 `
+    const response = await pool.query(stm)
+    // console.log("response")
+    // console.log(response)
+    if(response.rows.length>0){
+      res.status(200).json({
+        data:response.rows,
+        successBackend: "READ successfully saved activities."
+      })
+    }
+  } catch(err){
+    console.log('Failed to read saved activities, reasons: ',err.message)
+  }
+})
 app.post("/change-password", async (req, res, next) => {
   //get this user token, then exert its email
   const bearerToken = req.headers["authorization"];
