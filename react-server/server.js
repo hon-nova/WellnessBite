@@ -47,9 +47,8 @@ app.get("/username-exists/:user_name", async (req, res) => {
 });
 app.get("/all-activities", async (req, res) => {
   try {
-    const response = await pool.query("SELECT * FROM activities")    
+    const response = await pool.query("SELECT * FROM activities");
     if (response.rows.length > 0) {
-      
       res.status(200).json({
         data: response.rows,
         successBackend: "SUCCESSSFULLY retrieved activities",
@@ -143,15 +142,13 @@ app.post("/login", async (req, res) => {
       { expiresIn: "48h" }
     );
 
-    return res
-      .status(201)
-      .json({
-        successBackend: "Successfully Logged In.",
-        token: token,
-        user_id: user.user_id,
-        username: user.username,
-        email: user.email,
-      });
+    return res.status(201).json({
+      successBackend: "Successfully Logged In.",
+      token: token,
+      user_id: user.user_id,
+      username: user.username,
+      email: user.email,
+    });
   } catch (err) {
     console.log("Failed to login, ", err.message);
     return res.status(400).json({ errorBackend: err.message });
@@ -167,11 +164,9 @@ app.post("/change-password", async (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return res
-        .status(500)
-        .json({
-          error500: `Failed to authenticate token, reason:: ${err.message}`,
-        });
+      return res.status(500).json({
+        error500: `Failed to authenticate token, reason:: ${err.message}`,
+      });
     }
     req.userId = decoded.user_id;
     req.email = decoded.email;
@@ -192,17 +187,13 @@ app.post("/change-password", async (req, res, next) => {
         );
         //check if success
         if (responseUpdate.rowCount > 0) {
-          return res
-            .status(200)
-            .json({
-              successBackend: `Successfuly Updated password to the email user: ${email}`,
-            });
+          return res.status(200).json({
+            successBackend: `Successfuly Updated password to the email user: ${email}`,
+          });
         } else {
-          return res
-            .status(500)
-            .json({
-              error500: `Unsuccessfully Updated password to user with email ${email}`,
-            });
+          return res.status(500).json({
+            error500: `Unsuccessfully Updated password to user with email ${email}`,
+          });
         }
       } catch (err) {
         console.error("Unable to find user backend.");
@@ -226,40 +217,49 @@ app.post("/save-activity/:activity_id", async (req, res, next) => {
     const response0 = await pool.query(
       "SELECT * FROM users WHERE user_id = $1",
       [user_id]
-    );    
+    );
     if (response0.rowCount == 0) {
-      return res.status(404).json({ error: "User not found. Please log in to access this feature." });
-    }   
-    const response1 = await pool.query(
-      "SELECT * FROM user_activities WHERE activity_id=$1",
-      [activity_id]
-    );    
- 
-    if (response1.rowCount === 0) {     
-      const response2 = await pool.query(
-        "INSERT INTO user_activities(user_id,activity_id) VALUES ($1,$2)",
+      return res.status(404).json({
+        error: "User not found. Please log in to access this feature.",
+      });
+    }
+
+    const savedActivitiesResponse = await pool.query(
+      "SELECT * FROM user_activities WHERE user_id = $1",
+      [user_id]
+    );
+
+    const numSavedActivities = savedActivitiesResponse.rows.length;
+    if (numSavedActivities < 5) {
+      const existingActivityResponse = await pool.query(
+        "SELECT * FROM user_activities WHERE user_id = $1 AND activity_id = $2",
         [user_id, activity_id]
       );
-      console.log("response2-->",response2)
-      if (response2.rowCount > 0) {
-        // const act_id_saved= response2.activity_id
-        // console.log("act_id_saved-->",act_id_saved)
-        console.log("BACKEND new activity record");
-        console.log(response2.rows[0]);
-        res.json({
-          data: response2.rows[0],
-          successBackend: "Activity saved SUCCESSFULLY",
-        });
+
+      if (existingActivityResponse.rowCount === 0) {
+        const insertResponse = await pool.query(
+          "INSERT INTO user_activities(user_id, activity_id) VALUES ($1, $2)",
+          [user_id, activity_id]
+        );
+
+        if (insertResponse.rowCount > 0) {
+          console.log("BACKEND new activity record");
+          console.log(insertResponse.rows[0]);
+          res.json({
+            data: insertResponse.rows[0],
+            successBackend: "Activity saved SUCCESSFULLY",
+          });
+        } 
       } else {
-        res
-          .status(400)
-          .json({ errorBackend: "BACKEND FAILED TO SAVE ACTIVITY" });
+        console.log("The activity already exists. Out. Do nothing!");
+        res.status(400).json({        
+          errorBackend: "The activity already exists",
+        });
       }
     } else {
-      console.log("THE activity already exists. Out. Do nothing!");
+      console.log("Exceeded the maximum limit of saved activities (5).");
       res.status(400).json({
-        data: response2.rows[0],
-        errorBackend: "The activity already exists",
+        errorBackend: "Exceeded the maximum limit of saved activities (5).",
       });
     }
   } catch (err) {
