@@ -17,9 +17,9 @@ const Nutritions = () => {
         throw new Error(`HTTP error! Status: ${result.status}`);
       }
       const dataRawJson = await result.json();
-      console.log('inside fetchNutritions')
-      console.log('dataRowJson')
-      console.log(dataRawJson)
+      // console.log('inside fetchNutritions')
+      // console.log('dataRowJson')
+      // console.log(dataRawJson)
       setNutritions(dataRawJson);
      
     };

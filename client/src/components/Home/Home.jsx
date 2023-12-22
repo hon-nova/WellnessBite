@@ -17,16 +17,16 @@ const Home = () => {
       throw new Error(`HTTP error! Status: ${result.status}`);
     }
     const dataRawJson = await result.json();
-    console.log('inside fetchQuotes')
-    console.log('dataRowJson')
-    console.log(dataRawJson)
+    // console.log('inside fetchQuotes')
+    // console.log('dataRowJson')
+    // console.log(dataRawJson)
     setQuotes(dataRawJson);
     };
     fetchQuotes();
   },{})
 
-  console.log('quotes @playground')
-  console.log(quotes)
+  // console.log('quotes @playground')
+  // console.log(quotes)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +55,7 @@ const Home = () => {
     fetchData();
     
   }, []);
-  console.log('length of quotes::',quotes.length)
+  // console.log('length of quotes::',quotes.length)
 
 const imagesArray=[
   {
