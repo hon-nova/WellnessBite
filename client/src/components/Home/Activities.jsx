@@ -9,7 +9,25 @@ const Activities = () => {
   const [selectedTarget, setSelectedTarget] = useState("");
   const [errorBackend,setErrorBackend]=useState("")
   const [successThumbup,setSuccessThumbup]=useState("")
+  const [images,setImages]=useState([])
 
+  useEffect(() => {
+    const fetchImages = async () => {
+      const result = await fetch("/assets/images.json");
+      if (!result.ok) {
+        throw new Error(`HTTP error! Status: ${result.status}`);
+      }
+      const dataRawJson = await result.json();
+      console.log('inside fetchImages')
+      console.log('dataRowJson')
+      console.log(dataRawJson)
+      setImages(dataRawJson);
+     
+    };
+    fetchImages();
+    console.log('Images inside useEffect::')
+    console.log(images)
+  }, [images]);
   useEffect(()=>{
     const fetchActivities = async()=>{
       try{
@@ -19,9 +37,7 @@ const Activities = () => {
             "Content-Type":"application/json"
           }
         })        
-        const result = await response.json()
-        // console.log("result.data")
-        // console.log(result.data)
+        const result = await response.json()       
         if(response.ok){
           setActivities(result.data)        
           // setSuccess(result.successBackend)        
@@ -31,7 +47,7 @@ const Activities = () => {
       }
     }
     fetchActivities()
-    // console.log('@playground::',activities)
+   
   },[activities]) 
 
   const targetElements = (activities && activities.length >0)? (activities.map((el) => el.target)) : "";
@@ -89,13 +105,12 @@ const Activities = () => {
       console.log(result)     
       
       if (response.status === 200) {
-        // console.log("result.successBackend");
-        // console.log(result.successBackend)
+        
         setSuccessThumbup(result.successBackend)
         setTimeout(()=>{
           setSuccessThumbup(result.successBackend)
         },2000)
-        // Handle success as needed
+       
       } else if (response.status === 400) {
         console.log("FAILED to save activity");
         console.log(result.errorBackend);
@@ -107,7 +122,7 @@ const Activities = () => {
         setTimeout(()=>{
           setErrorBackend(result.error)
         },2000)
-        // Handle user not found as needed
+       
       } else {
         console.log("Unexpected response:", response.status);
       }    
@@ -180,12 +195,9 @@ const Activities = () => {
                           {element.target}
                         </h5>
                       </div>
-                    </td>
-                    <td style={{ width: "600px" }}>
-                    <img src={element.gif_url} alt="Loading images ..." /
-                    
-                    >                   
-                    </td>
+                    </td>                    
+                      <td style={{ width: "600px" }}>
+                    <img src={images[index]?.gifUrl} alt="Loading images ..." / >  </td>         
                     <td style={{ width: "200px" }}><button 
                     onClick={()=>handleClick(element)}
                     style={{ border:"none",}}><i><small>Save to profile?</small></i></button>                  
