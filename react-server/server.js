@@ -47,13 +47,9 @@ app.get("/username-exists/:user_name", async (req, res) => {
 });
 app.get("/all-activities", async (req, res) => {
   try {
-    const response = await pool.query("SELECT * FROM activities");
-    // const result = await response.json()
-    // console.log("response")
-    // console.log(response)
+    const response = await pool.query("SELECT * FROM activities")    
     if (response.rows.length > 0) {
-      // console.log('backend data')
-      // console.log(response.rows)
+      
       res.status(200).json({
         data: response.rows,
         successBackend: "SUCCESSSFULLY retrieved activities",
@@ -224,33 +220,35 @@ app.post("/change-password", async (req, res, next) => {
 app.post("/save-activity/:activity_id", async (req, res, next) => {
   const { activity_id } = req.params;
   const { user_id } = req.body;
-  console.log("user_id-->", user_id);
+  // console.log("user_id-->", user_id);
   try {
     //step 1: check user
     const response0 = await pool.query(
       "SELECT * FROM users WHERE user_id = $1",
       [user_id]
-    );
+    );    
     if (response0.rowCount == 0) {
-      return res.status(404).json({ error: "User not found. Please log in." });
-    }
-    //step 2: read user_activities to see if the activity_id already exists
+      return res.status(404).json({ error: "User not found. Please log in to access this feature." });
+    }   
     const response1 = await pool.query(
       "SELECT * FROM user_activities WHERE activity_id=$1",
       [activity_id]
-    );
-    if (response1.rowCount === 0) {
-      //insert
+    );    
+ 
+    if (response1.rowCount === 0) {     
       const response2 = await pool.query(
         "INSERT INTO user_activities(user_id,activity_id) VALUES ($1,$2)",
         [user_id, activity_id]
       );
+      console.log("response2-->",response2)
       if (response2.rowCount > 0) {
+        // const act_id_saved= response2.activity_id
+        // console.log("act_id_saved-->",act_id_saved)
         console.log("BACKEND new activity record");
         console.log(response2.rows[0]);
         res.json({
           data: response2.rows[0],
-          successBackend: "BACKEND SAVED SUCCESSFULLY",
+          successBackend: "Activity saved SUCCESSFULLY",
         });
       } else {
         res
@@ -259,6 +257,10 @@ app.post("/save-activity/:activity_id", async (req, res, next) => {
       }
     } else {
       console.log("THE activity already exists. Out. Do nothing!");
+      res.status(400).json({
+        data: response2.rows[0],
+        errorBackend: "The activity already exists",
+      });
     }
   } catch (err) {
     console.log("ERROR backend, reason-> ", err.message);
