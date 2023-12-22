@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-// import jwtDecode from "jwt-decode";
 import { jwtDecode } from "jwt-decode";
 
 const Activities = () => {
@@ -105,6 +104,9 @@ const Activities = () => {
         console.log("No User Found. Please log in.");
         console.log(result.error)
         setErrorBackend(result.error)
+        setTimeout(()=>{
+          setErrorBackend(result.error)
+        },2000)
         // Handle user not found as needed
       } else {
         console.log("Unexpected response:", response.status);
@@ -118,14 +120,12 @@ const Activities = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setSuccessThumbup('');
+      setErrorBackend('')
     }, 2000);
-
-    return () => {
-      // Clear the timeout if the component unmounts or successThumbup changes
+    return () => {      
       clearTimeout(timeoutId);
     };
-  }, [successThumbup]);
- 
+  }, [successThumbup,errorBackend]); 
   return (
     <div>
       <Navbar />
@@ -182,7 +182,9 @@ const Activities = () => {
                       </div>
                     </td>
                     <td style={{ width: "600px" }}>
-                    <img src={element.gifUrl} alt="Loading images ..." />                   
+                    <img src={element.gif_url} alt="Loading images ..." /
+                    
+                    >                   
                     </td>
                     <td style={{ width: "200px" }}><button 
                     onClick={()=>handleClick(element)}

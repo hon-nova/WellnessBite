@@ -40,7 +40,7 @@ const SavedActivities = () => {
                       </div>
                     </td>
                     <td style={{ width: "600px" }}>
-                    <img src={element.gifUrl} alt="Loading images ..." />                   
+                    <img src={element.gif_url} alt="Loading images ..." />                   
                     </td>
                     
                   </tr>

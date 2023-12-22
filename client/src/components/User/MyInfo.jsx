@@ -8,8 +8,8 @@ const MyInfo = () => {
   return (
     <div>
       <h1 className="col-xs-1 py-2" align="center">My Info</h1>
-      <p>Email Contact: <b>{email}</b></p>
       <p>Username: <b>{username}</b></p>
+      <p>Email Contact: <b>{email}</b></p>     
     </div>
   )
 }
