@@ -1,10 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
+import {useNavigate} from 'react-router-dom'
+import {jwtDecode} from 'jwt-decode'
 
 const MyInfo = () => {
   const { email, username } = useContext(AuthContext);
+  const navigateTo = useNavigate()
   console.log("email::", email);
   console.log("username::", username);
+  const token=sessionStorage.getItem("token")
+
   return (
     <div>
       <h1 className="col-xs-1 py-2" align="center">

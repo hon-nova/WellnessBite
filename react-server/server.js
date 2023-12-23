@@ -174,24 +174,7 @@ app.get('/read-saved-activities',async(req,res)=>{
     console.log('Failed to read saved activities, reasons: ',err.message)
   }
 })
- //get this user token, then exert its email
-  // const bearerToken = req.headers["authorization"];
-  // const token = bearerToken && bearerToken.split(" ")[1];
-  // console.log("token->",token)
-  // if (!token) {
-  //   return res.status(403).json({ error403: "No token provided." });
-  // }
-
-  // jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-  //   if (err) {
-  //     return res.status(500).json({
-  //       error500: `Failed to authenticate token, reason:: ${err.message}`,
-  //     });
-  //   }
-  //   req.userId = decoded.user_id;
-  //   req.email = decoded.email;
-  //   next();
-  // });
+ 
 app.post("/change-password", async (req, res) => { 
   const { password,user_id,email } = req.body;
   console.log("user_id->",user_id)

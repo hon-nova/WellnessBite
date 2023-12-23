@@ -14,7 +14,9 @@ const AuthProvider = ({children})=>{
       setIsLoggedIn(true)
    }
    const logout = ()=>{
-      setIsLoggedIn(false)       
+      setIsLoggedIn(false)     
+      setEmail('')
+      setUsername('')  
       sessionStorage.removeItem('token');
       navigateTo('/');      
    }

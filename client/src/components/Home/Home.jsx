@@ -4,7 +4,6 @@ import Footer from './Footer'
 import '../../css/home.css'
 import Papa from 'papaparse'
 
-
 const Home = () => {
 
   const[users,setUsers]=useState([])
@@ -16,22 +15,15 @@ const Home = () => {
      if (!result.ok) {
       throw new Error(`HTTP error! Status: ${result.status}`);
     }
-    const dataRawJson = await result.json();
-    // console.log('inside fetchQuotes')
-    // console.log('dataRowJson')
-    // console.log(dataRawJson)
+    const dataRawJson = await result.json();    
     setQuotes(dataRawJson);
     };
     fetchQuotes();
   },{})
 
-  // console.log('quotes @playground')
-  // console.log(quotes)
-
   useEffect(() => {
     const fetchData = async () => {
       const csvFilePath = '/assets/users.csv';
-
       try {
         const response = await fetch(csvFilePath);
         const text = await response.text();
@@ -55,7 +47,6 @@ const Home = () => {
     fetchData();
     
   }, []);
-  // console.log('length of quotes::',quotes.length)
 
 const imagesArray=[
   {
@@ -131,8 +122,7 @@ const imagesArray=[
       <Navbar/>
       <div className='row mb-2'>
         <img src="/assets/images/main.jpg" width="auto" height="600px" alt=""/>
-      </div>
-     
+      </div>     
       <div className='row mb-2'>
         <h1 className='text-center py-3' style={{ backgroundColor:"lightpink" }}>Most popular sports types</h1>
       </div>
@@ -143,12 +133,12 @@ const imagesArray=[
               <img src={el.photo} width={200} height={180} style={{borderRadius:"50%"}} alt=""/>
               <div className='mt-2'>
                 <p>
-                  <a class="btn btn-info" data-bs-toggle="collapse" href={`#collapseExample${index}`} role="button" aria-expanded="false" aria-controls={`collapseExample${index}`}>
+                  <a className="btn btn-info" data-bs-toggle="collapse" href={`#collapseExample${index}`} role="button" aria-expanded="false" aria-controls={`collapseExample${index}`}>
                     Benefits
                   </a>  
                 </p>
-              <div class="collapse" id={`collapseExample${index}`}>
-                <div class="card card-body">
+              <div className="collapse" id={`collapseExample${index}`}>
+                <div className="card card-body">
                   {<small>{el.benefit}</small>}
                 </div>
               </div>

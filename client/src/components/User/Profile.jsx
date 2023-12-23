@@ -1,8 +1,8 @@
 
-import React, {useContext} from 'react'
+import React, {useContext,useEffect} from 'react'
 import Navbar from '../Home/Navbar'
 import {Link} from 'react-router-dom'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route,useNavigate } from 'react-router-dom'
 import MyInfo from '../User/MyInfo'
 import SavedActivities from '../User/SavedActivities'
 import ChangePassword from '../User/ChangePassword'
@@ -11,10 +11,17 @@ import Footer from '../Home/Footer'
 import DeleteAccount from './DeleteAccount'
 
 const Profile = () => {
-   
+   const navigateTo = useNavigate()
   const {email,username} =useContext(AuthContext)
   console.log('email::',email)
   console.log('username::',username)
+  useEffect(()=>{
+    console.log("Inside useEffect")
+    if(!email){
+      sessionStorage.removeItem('token')
+      navigateTo('/')
+    }
+  },[email])
   return (
    <div>
       <Navbar/>
