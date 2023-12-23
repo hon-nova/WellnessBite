@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react'
 
 const SavedActivities = () => {
-    const [myActivities,setMyActivities] =useState([])
+    const [myActivities,setMyActivities] =useState([]) 
 
     const [images,setImages]=useState([])
+    const [removedMessage,setRemovedMessage]=useState("")
 
     useEffect(() => {
       const fetchImages = async () => {
@@ -16,16 +17,16 @@ const SavedActivities = () => {
         // console.log('dataRowJson')
         // console.log(dataRawJson)
         setImages(dataRawJson);
-       
+
       };
-      fetchImages();     
+      fetchImages();
     }, [images]);
-    const getImage= (id)=>{    
+    const getImage= (id)=>{
       const foundImage = images.find((image)=>Number(image.id) ===Number(id))
-      // console.log("founddImage")  
-      // console.log(founddImage) 
+      // console.log("founddImage")
+      // console.log(founddImage)
       return foundImage?.gifUrl || ''
-    } 
+    }
 
     const readSavedActivities = async()=>{
       const response = await fetch('http://localhost:8888/read-saved-activities')
@@ -37,8 +38,29 @@ const SavedActivities = () => {
     useEffect(()=>{
       readSavedActivities()
     },[])
+   
+    const handleRemove = (item)=>{
+      const removedItem = myActivities.find((el)=>el.activity_id===item.activity_id)
+      let newActivityArray = [...myActivities]
+      let updatedArray = newActivityArray.filter((el)=>el.activity_id !== removedItem.activity_id)
+      setMyActivities(updatedArray)
+      setRemovedMessage("Activity Removed.")
+      setTimeout(()=>{
+        setRemovedMessage('')
+      },2000)
+    }   
+    useEffect(() => {
+      const timeoutId = setTimeout(() => {
+        setRemovedMessage('');
+       
+      }, 2000);
+      return () => {      
+        clearTimeout(timeoutId);
+      };
+    }, [setRemovedMessage]); 
   return (
     <div>
+    {removedMessage && <p className="col-xs-1 alert alert-success d-block mx-auto" align="center" style={{ width:"200px" }}>{removedMessage}</p>}
       <h5 className="col-xs-1 py-2" align="center" style={{fontStyle:"italic" }}>Start small. Dedicating 5 minutes to practice during every workout session can help achieve your fitness goals faster. Slow and steady to win the race.</h5>
       <table className="table table-striped">
             <tbody>
@@ -63,11 +85,11 @@ const SavedActivities = () => {
                       </div>
                     </td>
                     <td style={{ width: "600px" }}>
-                    <img src={getImage(element?.activity_id)} alt="Loading images ..." / >  </td>  
-                    <td style={{ width: "100px" }}><button 
-                    // onClick={()=>handleClick(element)}
-                    style={{ border:"none",}}><i className="bi bi-trash3-fill">Remove</i></button>                  
-                     </td>                    
+                    <img src={getImage(element?.activity_id)} alt="Loading images ..." / >  </td>
+                    <td style={{ width: "100px" }}><button
+                    onClick={()=>handleRemove(element)}
+                    style={{ border:"none",}}><i className="bi bi-trash">Remove</i></button>
+                     </td>
                   </tr>
                 ))}
             </tbody>

@@ -211,11 +211,20 @@ const Activities = () => {
                     <td style={{ width: "600px" }}>
                     <img src={getImage(element?.activity_id)} alt="Loading..." 
                     onError={(e) => console.error('Image Error:', e)} 
-                    / >  </td>         
-                    <td style={{ width: "200px" }}><button 
+                    / >  </td>   
+                    <td style={{ width: "200px" }}>
+  <i className="bi-bootstrap bi-bootstrap-download"></i>
+  <button onClick={() => handleClick(element)} style={{ border: "none" }}>
+    <span><i><small>Save to profile?</small></i></span>
+  </button>
+</td>      
+                    {/* <td style={{ width: "200px" }}>
+                   
+                    <button 
                     onClick={()=>handleClick(element)}
-                    style={{ border:"none",}}><i><small>Save to profile?</small></i></button>                  
-                     </td>
+                    style={{ border:"none",}}>                  
+                    <span> <i className="bi bi-download">Save to profile?</i></span></button>                  
+                     </td> */}
                   </tr>
                 ))}
             </tbody>
