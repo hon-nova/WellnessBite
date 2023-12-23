@@ -176,7 +176,7 @@ const imagesArray=[
         <h1 className='text-center py-3' style={{ backgroundColor:"lightgrey" }}>Quotes</h1></div>       
       </div>
       <div className='row mb-2'>
-        <div className='col-md-1'>far left</div>
+        <div className='col-md-1'></div>
         {/* here quotes*/}
        {/* Quotes Carousel */}
        <div className="col-md-10" style={{ backgroundColor: "#FFA500",color:"black" }}>
@@ -218,7 +218,7 @@ const imagesArray=[
     )}
     </div>
         {/* End Quotes Carousel */}         
-        <div className='col-md-1'>far right</div>
+        <div className='col-md-1'></div>
       </div>
       <div className='row mb-2'>
         <h1 className='text-center py-3' style={{ backgroundColor:"lightpink" }}>Other Benefits</h1>

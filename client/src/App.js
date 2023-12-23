@@ -8,7 +8,7 @@ import Profile from "./components/User/Profile"
 import AuthProvider from "./components/contexts/AuthProvider";
 import Activities from "./components/Home/Activities";
 import Nutritions from "./components/Home/Nutritions";
-
+import Error from './components/Home/Error'
 
 
 function App() {
@@ -22,7 +22,8 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/login" element={<Login />}/>    
           <Route path="/activities" element={<Activities />}/>  
-          <Route path="/nutritions/*" element={<Nutritions/>}/>           
+          <Route path="/nutritions/*" element={<Nutritions/>}/>  
+          <Route path="*" element={<Error/>}/>         
         </Routes>
        </AuthProvider>        
       </Router>

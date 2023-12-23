@@ -19,15 +19,26 @@ const Activities = () => {
       }
       const dataRawJson = await result.json();
       console.log('inside fetchImages')
-      console.log('dataRowJson')
-      console.log(dataRawJson)
+      // console.log('dataRowJson')
+      // console.log(dataRawJson)
       setImages(dataRawJson);
      
     };
     fetchImages();
-    console.log('Images inside useEffect::')
-    console.log(images)
-  }, [images]);
+    // console.log('Images inside useEffect::')
+    // console.log(images)
+  }, []);
+
+  const getImage= (id)=>{    
+    const foundImage = images.find((image)=>Number(image.id) ===Number(id))
+    // console.log("founddImage")  
+    // console.log(founddImage) 
+    return foundImage?.gifUrl || ''
+  }
+  useEffect(()=>{
+    console.log("getImage('0003'):", getImage(3))
+  },[images])
+
   useEffect(()=>{
     const fetchActivities = async()=>{
       try{
@@ -86,9 +97,9 @@ const Activities = () => {
       const foundItem = activities.filter((element)=>Number(element.activity_id)===Number(activity.activity_id))[0]
   
       const id=foundItem.activity_id
-      console.log("IMPORTANT FOUNDITEM")
-      console.log("foundItem:::",foundItem)
-      console.log("id::::",id)   
+      // console.log("IMPORTANT FOUNDITEM")
+      // console.log("foundItem:::",foundItem)
+      // console.log("id::::",id)   
       const response = await fetch(`http://localhost:8888/save-activity/${id}`,{
         method:"POST",
         headers: {
@@ -141,6 +152,7 @@ const Activities = () => {
       clearTimeout(timeoutId);
     };
   }, [successThumbup,errorBackend]); 
+  // console.log("displayArray::",displayArray)
   return (
     <div>
       <Navbar />
@@ -178,7 +190,7 @@ const Activities = () => {
             <tbody>
               {displayArray?.length > 0 &&
                 displayArray.map((element,index) => (
-                  <tr key={element.id}>
+                  <tr key={index}>
                     <td>{index + 1}.</td>
                     <td style={{ width: "500px" }}>
                       <div>
@@ -196,8 +208,10 @@ const Activities = () => {
                         </h5>
                       </div>
                     </td>                    
-                      <td style={{ width: "600px" }}>
-                    <img src={images[index]?.gifUrl} alt="Loading images ..." / >  </td>         
+                    <td style={{ width: "600px" }}>
+                    <img src={getImage(element?.activity_id)} alt="Loading..." 
+                    onError={(e) => console.error('Image Error:', e)} 
+                    / >  </td>         
                     <td style={{ width: "200px" }}><button 
                     onClick={()=>handleClick(element)}
                     style={{ border:"none",}}><i><small>Save to profile?</small></i></button>                  

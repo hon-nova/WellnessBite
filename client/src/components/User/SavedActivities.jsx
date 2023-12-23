@@ -12,16 +12,20 @@ const SavedActivities = () => {
           throw new Error(`HTTP error! Status: ${result.status}`);
         }
         const dataRawJson = await result.json();
-        console.log('inside fetchImages')
-        console.log('dataRowJson')
-        console.log(dataRawJson)
+        // console.log('inside fetchImages')
+        // console.log('dataRowJson')
+        // console.log(dataRawJson)
         setImages(dataRawJson);
        
       };
-      fetchImages();
-      console.log('Images inside useEffect::')
-      console.log(images)
+      fetchImages();     
     }, [images]);
+    const getImage= (id)=>{    
+      const foundImage = images.find((image)=>Number(image.id) ===Number(id))
+      // console.log("founddImage")  
+      // console.log(founddImage) 
+      return foundImage?.gifUrl || ''
+    } 
 
     const readSavedActivities = async()=>{
       const response = await fetch('http://localhost:8888/read-saved-activities')
@@ -33,7 +37,6 @@ const SavedActivities = () => {
     useEffect(()=>{
       readSavedActivities()
     },[])
-
   return (
     <div>
       <h5 className="col-xs-1 py-2" align="center" style={{fontStyle:"italic" }}>Start small. Dedicating 5 minutes to practice during every workout session can help achieve your fitness goals faster. Slow and steady to win the race.</h5>
@@ -60,12 +63,11 @@ const SavedActivities = () => {
                       </div>
                     </td>
                     <td style={{ width: "600px" }}>
-                    <img src={images[index]?.gifUrl} alt="Loading images ..." / >  </td>  
+                    <img src={getImage(element?.activity_id)} alt="Loading images ..." / >  </td>  
                     <td style={{ width: "100px" }}><button 
                     // onClick={()=>handleClick(element)}
                     style={{ border:"none",}}><i className="bi bi-trash3-fill">Remove</i></button>                  
-                     </td>
-                    
+                     </td>                    
                   </tr>
                 ))}
             </tbody>

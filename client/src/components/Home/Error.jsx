@@ -4,7 +4,7 @@ import React from 'react'
 const Error = () => {
   return (
     <div>
-      <h1>Error</h1>
+      <h1 className="col-xs-1 py-2" align="center">404 Page Not Found!</h1>
     </div>
   )
 }
