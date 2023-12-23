@@ -23,13 +23,13 @@ const Profile = () => {
       <div className='row mb-3'>
         <div className='col-md-3 ml-5' style={{ backgroundColor:"#003366",position:"fixed",height: "100vh", overflowY: "auto" }}>
         <ul style={{ color:"white",listStyle:"none",fontSize:"20px" }}>
-          <li><Link to="/profile/my-info">My Info</Link> </li>
+          <li><Link to="/profile/my-info">Dashboard</Link> </li>
           <li><Link to="/profile/saved-activities">Saved Activities</Link> </li>
           <li><Link to="/profile/change-password">Change Password</Link></li>
           <li ><Link to="/profile/delete-account" style={{ color:"red" }}>Delete Account</Link></li>
         </ul>
         </div>
-        <div className='col-md-8 mr-5 overflow-auto' style={{ backgroundColor:"pink",marginLeft: "30%",height:"600px"}}>
+        <div className='col-md-8 overflow-auto col-xs-1' align="center" style={{ backgroundColor:"pink",marginLeft: "25%", height:"600px"}}>
         
         <Routes>
           {/* <Route path="/profile/*" element={<Profile/>}> */}

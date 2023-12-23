@@ -74,7 +74,7 @@ const handleInputChange =(e)=>{
   }
   return (
     <div className="col-xs-1 py-2" align="center">
-      <h1>Change Password Me</h1>
+      <h1 className='my-3'>Change Password</h1>
       {success && <p>{success}</p>}
       {errors.errorBackend && <p className='alert alert-warning'>{errors.errorBackend}</p>}
       <div>

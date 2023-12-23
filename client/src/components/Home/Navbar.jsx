@@ -43,25 +43,22 @@ const Navbar = () => {
     <div style={{ backgroundColor:"#E8E8E8" }}>
    <nav className="navbar navbar-expand-lg navbar-light bg-light mx-5">
   <Link className="navbar-brand" to="/" >
-
     <img src="/assets/images/workout.jpg" alt="" width={40} height={40} style={{ borderRadius:"50px" }}/>
   </Link>
-  <div className="collapse navbar-collapse" id="navbarSupportedContent">
+  <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
     <ul className="navbar-nav mr-auto">
       <li className="nav-item active">
-
         <Link className="nav-link" to="/activities">ACTIVITIES</Link>
       </li>
       <li className="nav-item active">
         <Link className="nav-link" to="/nutritions">NUTRITIONS</Link>
       </li>   
     </ul>
-    <ul className="navbar-nav">
-   
+    <ul className="navbar-nav ml-auto">   
     {isLoggedIn ? (<li className="nav-item dropdown">
-        <a className="nav-link dropdown-toggle" href="/profile" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {email}
-        </a>
+    <Link to="/profile/my-info" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  {email}
+     </Link>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
           <Link className="dropdown-item" to="/profile">My Profile</Link>
           <Link className="dropdown-item" to="/profile/change-password">Change Password</Link>
