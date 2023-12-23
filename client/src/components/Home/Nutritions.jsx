@@ -16,12 +16,8 @@ const Nutritions = () => {
       if (!result.ok) {
         throw new Error(`HTTP error! Status: ${result.status}`);
       }
-      const dataRawJson = await result.json();
-      // console.log('inside fetchNutritions')
-      // console.log('dataRowJson')
-      // console.log(dataRawJson)
-      setNutritions(dataRawJson);
-     
+      const dataRawJson = await result.json();     
+      setNutritions(dataRawJson);     
     };
     fetchNutritions();
   }, []);
@@ -30,12 +26,12 @@ const Nutritions = () => {
       const words = description.split(' ');
       const truncated = words.slice(0, 20).join(' '); 
       return `${truncated}...`;
-    };
-    
+    };    
   return (
     <div className='mb-5'>
-      <div><Navbar/></div>
-      <div className='row mb-2'>
+      <div><Navbar/></div>    
+          
+      <div className='row my-5'>
         <div className='col-md-1'></div>
         <div className='col-md-4 text-center' style={{ backgroundColor:"#F5F5F5"}}>
         <ul >
@@ -49,9 +45,8 @@ const Nutritions = () => {
               </div><hr/></li>                            
           ))}            
         </ul> 
-        </div>
-   
-        <div className='col-md-7 px-5 text-center' style={{ backgroundColor:"#F0F0F0",position:'fixed',right:0,top:60,bottom:10 }}>        
+        </div>   
+        <div className='col-md-7 px-5 text-center' style={{ backgroundColor:"#F0F0F0",position:'fixed',right:0,top:120,bottom:0,maxWidth:"800px" }}>        
         <Routes>            
         <Route path='/single-details/:name' element={<SingleDetails />} />        
         </Routes>
