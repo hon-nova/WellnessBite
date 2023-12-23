@@ -25,5 +25,9 @@
 
 ![image](public/assets/images/f_nine.png)
 
+![image](public/assets/images/f_savedact_2.png)
+
 ![image](public/assets/images/f_ten.png)
+
+![image](public/assets/images/f_changepass_2.png)
 
