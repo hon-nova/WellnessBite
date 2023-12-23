@@ -286,6 +286,22 @@ app.post("/save-activity/:activity_id", async (req, res, next) => {
     console.log("ERROR backend, reason-> ", err.message);
   }
 });
+app.post("/remove-activity/:removed_id",async(req,res)=>{
+  const {removed_id}=req.params
+  const {user_id}= req.body
+  try {
+    const response = await pool.query('DELETE FROM user_activities WHERE user_id=$1 AND activity_id=$2',[user_id,removed_id])
+    if(response.rowCount>0){
+    res.status(200).json({
+      successBackend: "BACKEND removed activity."
+    })
+    } else {
+      res.status(400).json({errorBackend:"BACKEND failed to remove activity."})
+    }
+  } catch(err){
+    res.status(500).json({errorBackend:"NETWORK ERROR"})
+  }  
+})
 
 app.listen(port, () => {
   console.info(`Node Postgres Server on port ${port}`);
