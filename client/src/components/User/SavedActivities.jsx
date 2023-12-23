@@ -12,7 +12,7 @@ const SavedActivities = () => {
     const token = sessionStorage.getItem("token");    
     const decoded = jwtDecode(token);  
     const user_id = decoded.user_id;  
-    console.log("user_id:::",user_id)
+    // console.log("user_id:::",user_id)
 
     useEffect(() => {
       const fetchImages = async () => {

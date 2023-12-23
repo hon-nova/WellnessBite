@@ -9,8 +9,7 @@ const MyInfo = () => {
     <div>
       <h1 className="col-xs-1 py-2" align="center">
         My Info
-      </h1>
-     
+      </h1>     
       <div className="card col-xs-1" align="center" style={{ width: "18rem" }}>
         <img src="/assets/images/avatar.png" class="card-img-top" alt="..." />
         <div className="card-body">

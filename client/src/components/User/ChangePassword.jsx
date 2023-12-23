@@ -1,28 +1,41 @@
-import React,{useContext,useState} from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import { AuthContext } from '../contexts/AuthProvider'
 import '../../css/profile.css'
+import {jwtDecode} from 'jwt-decode'
 
 const ChangePassword = () => {
 
-  const {email,username} =useContext(AuthContext)
+  const {email} =useContext(AuthContext)
   const[success,setSuccess] =useState("")
   const [formData,setFormData]=useState({
     password:"",
     confirmPassword:""
   })
+  const resetForm = () => {
+    setFormData({
+      password: '',
+      confirmPassword: '',
+    });
+  };
+
   const [errors,setErrors] =useState({
     password:"",
     confirmPassword:"",
     errorBackend:""
   })
+  const token=sessionStorage.getItem("token")
+  const decode = jwtDecode(token)
+  const user_id=decode.user_id
+  console.log("user_id::",user_id)
 
-const handleInputChange =(e)=>{
-  const {name,value}=e.target
-  setFormData((preState)=>({
-    ...preState,
-    [name]:value
-  }))
-}
+  const handleInputChange =(e)=>{
+    const {name,value}=e.target
+    setFormData((preState)=>({
+      ...preState,
+      [name]:value
+    }))
+  }
+
   const handleChangePassword = async(e)=>{
     e.preventDefault()
     //validate user input
@@ -41,43 +54,53 @@ const handleInputChange =(e)=>{
             "Authorization": `Bearer ${sessionStorage.getItem('token')}`
           },
           body: JSON.stringify({
-            password: formData.password
+            password: formData.password,
+            user_id:user_id,
+            email:email
           })
         })
-        const data=await response.json()
-        if(response.ok){         
+        if(response.ok){
+          const data=await response.json()
+          console.log("data::",data)
+                
           console.log(`successBackend::`)
-          console.log(data.successBackend)
-          setSuccess(data.successBackend)
-        } else {
-          console.log("error500")
-          console.log(data.error500)
-          if(response.status===500){
+          if(response.status===200){
+            
+            // setSuccess(data.successBackend)  
+            // console.log(data.successBackend)
+            console.log("Setting successBackend:", data.successBackend);
+            setSuccess(data.successBackend);
+            console.log("SuccessBackend state after setting:", success);
+            resetForm()
+          }       
+          
+          setTimeout(()=>{
+            setSuccess('')
+          },2000)
+        } else if(response.status===400){
+          const data=await response.json()
+          setErrors((prevErrors)=>({
+            ...prevErrors,
+            errorBackend:data.error400
+          }))
+          setTimeout(()=>{
             setErrors((prevErrors)=>({
               ...prevErrors,
-              errorBackend:data.error500
+              errorBackend:''
             }))
-          }
-          if(response.status===404){
-            console.log("error404")
-            console.log(data.error404)
-            setErrors((prevErrors)=>({
-              ...prevErrors,
-              errorBackend:data.error404
-            }))
-          }
+          },2000)          
         }
       } catch(err){
-        console.error("Failed to change to a new password::",err.message)
+        console.error("Failed to UPDATE the new password::",err.message)
       }
     }
   }
+  // console.log("success::",success)
   return (
-    <div className="col-xs-1 py-2" align="center">
-      <h1 className='my-3'>Change Password</h1>
-      {success && <p>{success}</p>}
-      {errors.errorBackend && <p className='alert alert-warning'>{errors.errorBackend}</p>}
+    <div className="col-xs-1 py-2" align="center">     
+      <h1 className='my-3'>Change Password</h1>     
       <div>
+      {success && <p className="col-xs-1 alert alert-success d-block mx-auto" align="center" style={{ width:"600px" }}>{success}</p>}
         <form onSubmit={handleChangePassword} method="POST">
         <div className='my-1'><label style={{ width:"180px" }}>Current email: </label> 
         <input type="text" name="email" value={email} disabled className='input-profile'/><br/></div>
@@ -106,14 +129,11 @@ const handleInputChange =(e)=>{
             {errors.confirmPassword}</small>
           </span>
         )}<br/>
-       </div>
-        
-        <label style={{ width:"180px" }}></label> <button type="submit" className='button-profile'>Change Password</button>
-        
+       </div>        
+        <label style={{ width:"180px" }}></label> <button type="submit" className='button-profile'>Change Password</button>  
         </form>
-      </div>
+      </div>     
     </div>
   )
 }
-
 export default ChangePassword
