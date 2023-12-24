@@ -97,9 +97,7 @@ app.post("/register", async (req, res) => {
   } catch (error) {
     if (error.code === "23505") {
       // Unique constraint violation (username or email already exists)
-      return res
-        .status(400)
-        .json({ errorBackend: "Username or email already exists." });
+      return res.json({ errorBackend: "Username or email already exists." });
     } else {
       return res.status(500).json({ errorBackend: "REGISTER FAILED BACKEND." });
     }

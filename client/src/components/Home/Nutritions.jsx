@@ -1,13 +1,13 @@
 import React, {useEffect,useState} from 'react'
 
 import SingleDetails from './SingleDetails'
-import {Routes, Route, Link,useNavigate, Navigate,} from 'react-router-dom'
+import {Routes, Route, Link,useNavigate} from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
 
 
 const Nutritions = () => { 
-  const navigateTo = useNavigate() 
+  
   const [nutritions,setNutritions] =useState([])   
 
   useEffect(() => {
