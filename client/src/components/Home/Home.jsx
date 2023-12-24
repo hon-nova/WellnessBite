@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "../../css/home.css";
@@ -7,7 +7,7 @@ import Papa from "papaparse";
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [quotes, setQuotes] = useState([]);
-
+  const [isActive, setIsActive] = useState(null)
   useEffect(() => {
     const fetchQuotes = async () => {
       const result = await fetch("/assets/quotes.json");
@@ -20,6 +20,9 @@ const Home = () => {
     fetchQuotes();
   }, {});
 
+  const handleToggle = (index)=>{
+    setIsActive((prevState)=> (prevState ===index ? null : index))
+  }
   useEffect(() => {
     const fetchData = async () => {
       const csvFilePath = "/assets/users.csv";
@@ -44,34 +47,34 @@ const Home = () => {
   }, []);
   const faqs = [
     {
-      title: "title1",
+      title: "Why is it important to work out daily?",
       content:
-        "content1-Physical activity isn't just about moving your body — it's also about invigorating your mind, boosting learning, and embracing charitable initiatives. In this article, we'll explore the many benefits of physical activity and illustrate why physical activity is important in shaping our holistic well-being.",
+        "Well. Health is wealth. Regular exercise offers numerous health benefits, including improved cardiovascular health, weight management, increased energy levels, and enhanced mood. You are depositing capitals into your bank account. You are also depositing health into your whole self. Good health will serve wealth. Both are equally important.",
     },
     {
-      title: "title2",
+      title: "What should I eat before and after my daily workout?",
       content:
-        "content2-Physical activity isn't just about moving your body — it's also about invigorating your mind, boosting learning, and embracing charitable initiatives. In this article, we'll explore the many benefits of physical activity and illustrate why physical activity is important in shaping our holistic well-being.",
+        "Eating a balanced meal or snack with a combination of carbohydrates and protein before a workout can provide energy. Afterward, refuel with a mix of protein and carbohydrates to aid recovery.",
     },
     {
-      title: "title3",
+      title: "How can I prevent burnout from daily workouts?",
       content:
-        "content3-Physical activity isn't just about moving your body — it's also about invigorating your mind, boosting learning, and embracing charitable initiatives. In this article, we'll explore the many benefits of physical activity and illustrate why physical activity is important in shaping our holistic well-being.",
+        "Take it easy and don't let burnout happen to your new routine. Your body needs time to adapt and digest the changes you make through exercise as well.",
     },
     {
-      title: "title4",
+      title: "How can I make working out a habit?",
       content:
-        "content4-Physical activity isn't just about moving your body — it's also about invigorating your mind, boosting learning, and embracing charitable initiatives. In this article, we'll explore the many benefits of physical activity and illustrate why physical activity is important in shaping our holistic well-being.",
+        "Start with small, achievable goals. Schedule your workouts at the same time each day. Consistency is key to forming a habit. Just do it until you win.",
     },
     {
-      title: "title5",
+      title: "Is it okay to work out if I'm feeling sore?",
       content:
-        "content5-Physical activity isn't just about moving your body — it's also about invigorating your mind, boosting learning, and embracing charitable initiatives. In this article, we'll explore the many benefits of physical activity and illustrate why physical activity is important in shaping our holistic well-being.",
+        "Mild soreness is normal, but listen to your body. Think about a ballet artist and look at their feet. Have they been suffered the pain ? Plenty.",
     },
     {
-      title: "title6",
+      title: "How do I overcome workout plateaus and boredom?",
       content:
-        "content6-Physical activity isn't just about moving your body — it's also about invigorating your mind, boosting learning, and embracing charitable initiatives. In this article, we'll explore the many benefits of physical activity and illustrate why physical activity is important in shaping our holistic well-being.",
+        "Set new fitness goals and challenge yourself with different exercises.",
     },
   ];
   const imagesArray = [
@@ -88,25 +91,25 @@ const Home = () => {
         "Regular boxing workouts enhance cardiovascular health, boost endurance, and improve overall body strength, providing a powerful and energizing exercise routine.",
     },
     {
-      name: "Practising Balle",
+      name: "Practising Ballet",
       photo: "/assets/images/eight.jpg",
       benefit:
         "Regular ballet practice enhances strength, posture, and grace, contributing to a sculpted physique and overall physical elegance.",
     },
     {
-      name: "Pushing up",
+      name: "Pushs-up",
       photo: "/assets/images/five.jpg",
       benefit:
         "Incorporating daily push-ups into your exercise routine enhances upper body strength, tones multiple muscle groups, and contributes to overall functional fitness.",
     },
     {
-      name: "Woman Using Roping",
+      name: "Toggling Ropes",
       photo: "/assets/images/four.jpg",
       benefit:
         "Engaging in daily exercises with dual ropes offers women an empowering fitness routine, promoting enhanced cardiovascular endurance and muscle toning. The rhythmic coordination required in dual rope workouts not only strengthens the body but also adds an enjoyable and dynamic element to their overall well-being.",
     },
     {
-      name: "Using Ropes",
+      name: "Toggling Ropes",
       photo: "/assets/images/roping.jpg",
       benefit:
         "Incorporating dual rope exercises into your daily routine provides a dynamic and effective way for men to enhance cardiovascular health and build full-body strength. The synchronized movements foster coordination and agility, contributing to a well-rounded and invigorating fitness experience.",
@@ -118,7 +121,7 @@ const Home = () => {
         "Engaging in daily jogging provides consistent cardiovascular exercise, promoting heart health by strengthening the cardiovascular system and improving circulation. Regular jogging contributes to sustainable weight management, aiding in weight loss or maintenance, and enhances overall fitness and endurance over time. The daily routine of jogging also serves as an effective stress-reliever, releasing endorphins that elevate mood and contribute to mental well-being.",
     },
     {
-      name: "Playing Kungfu",
+      name: "Playing Kung-fu",
       photo: "/assets/images/six.jpg",
       benefit:
         "Practicing Kung Fu daily enhances physical fitness, fostering strength, flexibility, and coordination. Additionally, it cultivates mental discipline, promoting focus, resilience, and a harmonious balance between mind and body.",
@@ -137,24 +140,44 @@ const Home = () => {
         "Engaging in daily swimming not only promotes cardiovascular health, toning muscles and improving endurance but also provides a refreshing and stress-relieving experience, contributing to overall mental well-being and relaxation. Dive into a daily swim to nurture both physical fitness and mental rejuvenation.",
     },
     {
-      name: "Running Marathon",
+      name: "Running a Marathon",
       photo: "/assets/images/three.jpg",
       benefit:
         "Participating in daily marathon running not only enhances cardiovascular fitness and stamina but also fosters a sense of accomplishment, boosting confidence and mental resilience. Lace up your shoes for a daily marathon to experience the joy of achieving both physical and mental milestones.",
     },
     {
-      name: "Heavy Weight-lifting",
+      name: "Heavy Weightlifting",
       photo: "/assets/images/two.jpg",
       benefit:
         "With each lift, you not only foster robust muscles but also cultivate a powerful mindset that conquers challenges inside and outside the gym.",
     },
     {
-      name: "Dumb-bells",
+      name: "Using Dumpbells",
       photo: "/assets/images/workout.jpg",
       benefit:
         "Integrate dumbbell exercises into your daily routine to amplify your fitness journey. With these versatile tools, you'll not only sculpt your physique but also enhance your overall strength, boosting both physical and mental well-being.",
     },
   ];
+  const [isJogging, setIsJogging] = useState(null)
+  const handleBenefitClick =()=>{
+    setIsJogging((prevState)=>(!prevState))
+  }
+  const videoRef = useRef(null);
+  const audioRef = useRef(null);
+
+  const playVideoAndAudio = () => {
+    videoRef.current.play();
+    audioRef.current.play();
+    setIsJogging(true)
+  };
+  const stopVideoAndAudio = () => {
+    videoRef.current.pause();
+    audioRef.current.pause();
+    setIsJogging(false); 
+  };
+  useEffect(() => {    
+    videoRef.current.controls = false;
+  }, []);
   
   return (
     <div>
@@ -177,8 +200,8 @@ const Home = () => {
               <h4>{el.name}</h4>
               <img
                 src={el.photo}
-                width={200}
-                height={180}
+                width={230}
+                height={200}
                 style={{ borderRadius: "50%" }}
                 alt=""
               />
@@ -188,6 +211,7 @@ const Home = () => {
                     className="btn btn-info"
                     data-bs-toggle="collapse"
                     href={`#collapseExample${index}`}
+                    onClick={()=>handleBenefitClick(index)}
                     role="button"
                     aria-expanded="false"
                     aria-controls={`collapseExample${index}`}
@@ -196,9 +220,9 @@ const Home = () => {
                   </a>
                 </p>
                 <div className="collapse" id={`collapseExample${index}`}>
-                  <div className="card card-body">
+                <div className="card card-body">
                     {<small>{el.benefit}</small>}
-                  </div>
+                  </div>                
                 </div>
               </div>
             </div>
@@ -288,7 +312,7 @@ const Home = () => {
                       className="carousel-caption d-none d-md-block"
                       style={{ color: "black" }}
                     >
-                      <p style={{ fontFamily: "cursive", fontSize: "20px" }}>
+                      <p style={{ fontFamily: "cursive", fontSize: "32px" }}>
                         {quote.content}
                       </p>
                       <h5>{quote.author}</h5>
@@ -331,40 +355,12 @@ const Home = () => {
           className="text-center py-3"
           style={{ backgroundColor: "lightpink" }}
         >
-          Other Benefits
-        </h1>
-      </div>
-      <div className="row my-5">
-        <div className="col-md-1"></div>
-        <div className="col-md-5">
-          <iframe
-            title="TRU Job Fair"
-            width="560"
-            height="315"
-            // https://www.youtube.com/watch?v=yKJ3iFX-GCY&ab_channel=CBSNewYork
-            src="https://www.youtube.com/embed/yKJ3iFX-GCY"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-        <div className="col-md-5 mx-5">
-          <h3>Study Finds Evening Exercise May Have Extra Health Benefits</h3>
-          <p>CBS New York</p>
-        </div>
-        <div className="col-md-1"></div>
-      </div>
-      <div className="row mb-2">
-        <h1
-          className="text-center py-3"
-          style={{ backgroundColor: "lightpink" }}
-        >
           Most Frequently Asked Questions
         </h1>     
       </div>
-      <div className="row mb-4">
+      <div className="row">
           {/* loop here */}      
-      <div className="row ml-5" style={{ margin:"0 100px 100px 100px" }}>           
+      <div className="row ml-5" style={{ margin:"40px 100px 60px 100px" }}>           
         {faqs.length > 0 &&
           faqs.map((item, index) => (
             <div className="col-md-5">
@@ -372,6 +368,7 @@ const Home = () => {
                 <div className="accordion-item">
                   <h2 className="accordion-header">
                     <button
+                    onClick={()=>handleToggle(index)}
                       className="accordion-button"
                       type="button"
                       data-bs-toggle="collapse"
@@ -384,12 +381,12 @@ const Home = () => {
                   </h2>
                   <div
                     id={`collapseOne${index}`}
-                    className="accordion-collapse collapse show"
-                    data-bs-parent="#accordionExample"
+                    className={`accordion-collapse collapse ${isActive===index ? 'show' : ''}`}
+                    data-bs-parent={`#accordionExample${index}`}
                   >
-                    <div className="accordion-body">
+                  {isActive===index &&  <div className="accordion-body">
                       <code>{item.content}</code>
-                    </div>
+                    </div>}                   
                   </div>
                 </div>
               </div>
@@ -397,7 +394,40 @@ const Home = () => {
           ))}             
       </div> 
       {/* <div className="col-md-1">right</div>  */}
-      </div>    
+      </div> 
+      <div className="row mb-2">
+        <h1
+          className="text-center py-3"
+          style={{ backgroundColor: "lightblue" }}
+        >
+          Just Do It.
+        </h1>
+      </div>
+      <div className="row my-5">
+        <div className="col-md-1"></div>
+        <div className="col-md-10 text-center mb-5">         
+          <video ref={videoRef} width="640" height="360" controls muted>
+            <source src="/assets/video_2.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>         
+       <div style={{ display:"none" }}>
+          <audio ref={audioRef} controls>
+            <source src="/assets/audio_2.mp3" type="audio/mp3" />
+            Your browser does not support the audio tag.
+          </audio>
+       </div>         
+          <br />
+      
+      <button 
+      className="mx-auto d-block" style={{ borderRadius:"10px" }}
+      onClick={isJogging? stopVideoAndAudio: playVideoAndAudio}>{isJogging ? 'Press to Pause':'Press to Play'}</button>
+        </div>
+        {/* <div className="col-md-3 mx-5">
+          <h3>I am the One.</h3>
+          <p>Unknown</p>
+        </div> */}
+        <div className="col-md-1"></div>
+      </div>   
       <div>
         <Footer />
       </div>
