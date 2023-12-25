@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {jwtDecode} from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const SavedActivities = () => {
 
@@ -120,7 +121,7 @@ const SavedActivities = () => {
                     <img src={getImage(element?.activity_id)} alt="Loading images ..." / >  </td>
                     <td style={{ width: "100px" }}><button
                     onClick={()=>handleRemove(element)}
-                    style={{ border:"none",}}>Remove</button>
+                    style={{ border:"none",}}> <i className="bi bi-trash3"></i></button>
                      </td>
                   </tr>
                 ))}

@@ -134,7 +134,8 @@ const Login = () => {
           onChange={handleInputChange}
           className='input-login'
         /> <br /><br/>
-        <button type="submit" className='button-login'>LOGIN</button>
+        <button type="submit" className='button-login'>LOGIN</button>     
+        <div className=''> <a href="/forgot-password" style={{ color:"darkblue",marginLeft:"100px" }}><i><small>Forgot password?</small></i></a></div>  
       </form>
       <div>Not registered yet? Please click <a href="/register">here</a> to create one.</div>
     </div></div>
