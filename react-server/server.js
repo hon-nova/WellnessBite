@@ -63,12 +63,13 @@ app.get("/all-activities", async (req, res) => {
   }
 });
 app.get("/email-exists/:email", async (req, res) => {
-  const e_mail = req.params;
+  const {email} = req.params;
+  console.log("email->",email)
   //read users
   const result = await pool.query("SELECT * FROM users WHERE email=$1", [
-    e_mail,
+    email,
   ]);
-  if (result.rows.length > 0) {
+  if (result.rowCount > 0) {
     return res.json({ exists: true });
   } else {
     return res.json({ exists: false });
@@ -177,7 +178,7 @@ app.get('/read-saved-activities',async(req,res)=>{
  
 app.post("/change-password", async (req, res) => { 
   const { password,user_id,email } = req.body;
-  console.log("user_id->",user_id)
+  // console.log("user_id->",user_id)
   try {
     const password_h = await bcrypt.hash(password, 10);
     const response = await pool.query("SELECT * from users WHERE user_id=$1", [user_id]);

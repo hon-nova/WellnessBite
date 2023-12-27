@@ -20,7 +20,7 @@ const ForgotPassword = () => {
       const dataReturn = await result.json();
       console.log("Email::");
       console.log(dataReturn);
-      if (dataReturn.exists !== true) {
+      if (dataReturn.exists === false) {
         setErrors((prevErrors) => ({
           ...prevErrors,
           email: "No record found.",
@@ -32,42 +32,14 @@ const ForgotPassword = () => {
   };
    const recoverPassword = async()=>{
       setErrors({})
-      if (!formData.email) {
-         setErrors((prevErrors) => ({
-           ...prevErrors,
-           email: "Email is required.",
-         }));
-       } else if (emailRegex.test(formData.email) === false) {
-         setErrors((prevErrors) => ({
-           ...prevErrors,
-           email: " Provide a valid email.",
-         }));
-         // setTimeout(()=>{
-         //    setErrors((prevErrors) => ({
-         //       ...prevErrors,
-         //       email: "",
-         //     }));
-         // },2000)
-       } else await checkEmailExists(formData.email);
-
-       if (!formData.password) {
-         setErrors((prevErrors) => ({
-           ...prevErrors,
-           password: "Provide a password.",
-         }));
-       }
-       if (!formData.confirm_password) {
-         setErrors((prevErrors) => ({
-           ...prevErrors,
-           confirm_password: "Re-enter the password.",
-         }));
-       } else if(formData.confirm_password!==formData.password){
-         setErrors((prevErrors) => ({
-            ...prevErrors,
-            confirm_password: "Passwords don't match.",
-          }));
-       }
-       if(Object.values(errors).every((er)=>er==='')){
+      const updatedErrors ={
+         ...errors,
+         email: !formData.email ? "Provide an email address":(emailRegex.test(formData.email)===false) ? "Provide a valid email address": await checkEmailExists(formData.email),
+         password: !formData.password ? "Provide a password": "",
+         confirm_password: !formData.confirm_password? "Re-type the password": (formData.confirm_password!== formData.password) ? "Passwords don't match.":""
+      }
+         setErrors(updatedErrors)
+         if(Object.values(errors).every((er)=>er==='')){
          try {
             const response = fetch('http://localhost:8888/login-forgot-password',{
          method:"POST",
@@ -79,32 +51,37 @@ const ForgotPassword = () => {
             password:formData.password
          })
       })
-      const result = (await response).json()
-      console.log("result fetch backend::",result)
-      if(result.successBackend==="Updated Password successfully."){
-         setSuccess(result.successBackend)
-         setTimeout(() => {
-            navigateTo("/login");
-          }, 2000);
+      const result = await response.json()
+
+      console.log("result fetch backend::",result)      
+      if(response.status===200){
+      console.log("result.successBackend::",result.successBackend)
+      // result.successBackend==="Updated Password successfully."
+
+      setSuccess(result.successBackend)
+      setFormData("")
+      setTimeout(() => {
+         navigateTo("/login");
+         }, 2000);      
+      }      
+   if (result.status === 400) {
+      console.error("Unsuccessfully updated password.", await result.text());
       }
-      if (result.status === 400) {
-         console.error("Unsuccessfully updated password.", await result.text());
-       }
-         } catch(err){
-            console.log(err.message)
-         }
-       }     
+   } catch(err){
+   // console.log(err.message)
+   }
+   }     
    }
    useEffect(()=>{
       const timeId= setTimeout(()=>{
          setErrors((pre)=>({
             ...pre,
             errorBackend:"",
-            email:""
+            // email:""
          }),2000)
       })
       return ()=>{clearTimeout(timeId)}
-   },[errors.errorBackend,errors.email])
+   },[errors.errorBackend])
 const handleInputChange= (e)=>{
    const {name,value}=e.target
    setFormData((pre)=>({
