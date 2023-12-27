@@ -67,6 +67,11 @@ const Navbar = () => {
                 NUTRITIONS
               </Link>
             </li>
+            <li className="nav-item active">
+              <Link className="nav-link" to="/contact-agent">
+                CONTACT AGENTS
+              </Link>
+            </li>
           </ul>
           <ul className="navbar-nav ml-auto">
             {isLoggedIn ? (

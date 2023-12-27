@@ -1,4 +1,4 @@
-import React, {useState,useContext} from 'react'
+import React, {useState,useContext,useEffect} from 'react'
 import { useNavigate} from "react-router-dom";
 import { AuthContext } from '../contexts/AuthProvider';
 import "../../css/login.css"
@@ -28,6 +28,9 @@ const Login = () => {
   }
   const handleLoginPage =async (e)=>{
     e.preventDefault()
+    setErrors({username:"",
+    password:"",
+    errorBackend:""})
       //1 validate user input      
       const updatedErrors = {
         ...errors,
@@ -70,11 +73,23 @@ const Login = () => {
                 ...prevErrors,
                 errorBackend: dataBackend.errorBackend
               }))
+              setTimeout(()=>{
+                setErrors((prevErrors)=>({
+                  ...prevErrors,
+                  errorBackend: ""
+                }))
+              },2000)
             } else if(result.status===400){
               setErrors((prevErrors)=>({
                 ...prevErrors,
                 errorBackend: dataBackend.errorBackend
               }))
+              setTimeout(()=>{
+                setErrors((prevErrors)=>({
+                  ...prevErrors,
+                  errorBackend: ""
+                }))
+              },2000)
             } 
                            
         } catch(err){
@@ -82,6 +97,20 @@ const Login = () => {
         }
     }   
   }
+  useEffect(()=>{
+    const timeoutId = setTimeout(() => {
+      setErrors((prevErrors)=>({
+        ...prevErrors,
+        errorBackend: ""
+      }))   
+    
+    }, 2000);
+    return () => {     
+      clearTimeout(timeoutId);
+    };
+
+  },[errors.errorBackend])
+
   return (
     <div style={{ marginTop:"60px", backgroundColor:"#ade2e6" }}>
   <div className='row mx-5'>

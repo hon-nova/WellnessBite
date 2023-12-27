@@ -38,7 +38,7 @@ useEffect(()=>{
 },[selectedCountry,countries])
 
 const handleContact = (user)=>{
-   navigateTo(`/users/${user.user_id}`,{state: {user:user}})
+   navigateTo(`/contact-agent/${user.user_id}`,{state: {user:user}})
 }
   return (  
     <div>

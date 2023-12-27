@@ -86,7 +86,6 @@ const Register = () => {
         password: "Password is required.",
       }));
     }
-
     console.log(Object.values(errors).every((err) => err === "")); //true if errors
     if (Object.values(errors).every((err) => err === "")) {
       try {
@@ -115,8 +114,7 @@ const Register = () => {
         if (result.status === 400) {
           console.error("Registration failed:", await result.text());
         }
-      } catch (err) {
-        
+      } catch (err) {        
         console.log("Full response object:", err.response);
         console.error("Failed registered Frontend");
       }

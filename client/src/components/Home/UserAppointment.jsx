@@ -13,8 +13,6 @@ const UserAppointment = () => {
       let updateErrors = {}
       (formData.name!=='') ? (updateErrors.name==="Cardholder name is required"): (updateErrors.name="")
       (formData.digit!=='')
-
-
       setErrors(updateErrors)
       //make errors array
       console.log(Object.values(errors))
@@ -41,7 +39,7 @@ const UserAppointment = () => {
          <input type="date" name="date" value={date}
          style={{ borderRadius:"10px", width:"200px" }} /> 
       </p>
-      <p>$1 deposit. We won't charge you for the first trial. Conect with us for your concern first.</p>
+      <p>A $1 deposit! No charges for your initial trial. Reach out to us with any concerns you may have at the moment.</p>
       <div>
       <form onSubmit={handleSubmit} style={{ width:"550px" }}>
          <div style={{ paddingLeft:"10px" }}>
@@ -86,19 +84,13 @@ const UserAppointment = () => {
          <button type="submit" onClick={showReceipt}
          style={{ borderRadius:"10px" }}
          >Process</button></div>
-         </div>
-         
+         </div>         
      </form>
-      </div>
-     
-      <p></p>
+      </div>     
       <span></span>
    </div>
  </div>}
-
     </div>
-  
-  
   )
 }
 

@@ -153,6 +153,8 @@ app.post("/login", async (req, res) => {
   }
 });
 
+
+
 app.get('/read-saved-activities',async(req,res)=>{
   try {
     const stm=`select * from activities 
@@ -208,6 +210,38 @@ app.post("/change-password", async (req, res) => {
     console.err("Failed to check user password backend.");
   }
 });
+
+app.post("/login-forgot-password",async (req,res)=>{
+  const {email,password} =req.body
+  try{
+    const password_h=await bcrypt.hash(password,10)
+    const response = await pool.query("SELECT * from users WHERE email=$1",[email])
+    if(response.rowCount>0){
+      //updated
+      try{
+        const responseUpdate = await pool.query("UPDATE users SET password=$1 WHERE email=$2 RETURNING *",[password_h,email])
+        //check if success
+        if(responseUpdate.rowCount >0){
+          return res.status(200).json({
+            successBackend:`Updated Password successfully.`
+          })
+        } else {
+          return res.status(400).json({
+            error400: `Unsuccessfully Updated password to user with email ${email}`,
+          });
+        }
+      } catch(err){
+        console.log("INTERNAL NETWORK ERROR.")
+      }
+    } else {
+      return res
+        .status(404)
+        .json({ error404: `No record found attached to email ${email}` });
+    }
+  } catch(err){
+    console.log(err.message)
+  }
+})
 
 app.post("/save-activity/:activity_id", async (req, res, next) => {
   const { activity_id } = req.params;
