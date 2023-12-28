@@ -4,11 +4,15 @@
 
 ![image](public/assets/images/f_two.png)
 
+![image](public/assets/images/f_pwd_1.png)
 
-![image](public/assets/images/f_three.png)
+![image](public/assets/images/f_pwd_2.png)
+
+![image](public/assets/images/f_three_4.png)
 
 
-![image](public/assets/images/f_four.png)
+![image](public/assets/images/f_three_5.png)
+
 
 ![image](public/assets/images/f_home4.png)
 

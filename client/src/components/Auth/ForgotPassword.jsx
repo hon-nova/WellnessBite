@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from '../Home/Footer'
 
 const ForgotPassword = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +22,14 @@ const ForgotPassword = () => {
 
   const checkEmailExists = async (e_mail) => {
     // /email-exists/:email
+    if (!e_mail) {
+      return "Provide an email address";
+    }
+
+    if (!emailRegex.test(e_mail)) {
+      return "Provide a valid email address";
+    }
+
     try {
       const result = await fetch(
         `http://localhost:8888/email-exists/${e_mail}`
@@ -29,18 +38,31 @@ const ForgotPassword = () => {
       console.log("Email::");
       console.log(dataReturn);
       if (dataReturn.exists === false) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          email: "No record found.",
-        }));
+        return 'No record found.'
       }
+      return ''
     } catch (err) {
-      console.err("Failed to check email exists");
+      // console.err("Failed to check email exists");
+      console.error("Failed to check email exists", err);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      email: "Error checking email existence.",
+    }));
     }
   };
   const resetPassword = async () => {
     setErrors({});
-    const updatedErrors = {
+
+    // Validate email existence asynchronously
+  const emailValidationResult = await checkEmailExists(formData.email);
+
+  // Update the email error state
+  setErrors((prevErrors) => ({
+    ...prevErrors,
+    email: emailValidationResult,
+  }));
+
+  const updatedErrors = {
       ...errors,
       email: !formData.email
         ? "Provide an email address"
@@ -72,8 +94,7 @@ const ForgotPassword = () => {
         if (response.ok) {
           console.log("result fetch backend::", result);
           if (response.status === 200) {
-            console.log("result.successBackend::", result.successBackend);
-            // result.successBackend==="Updated Password successfully."
+            console.log("result.successBackend::", result.successBackend);           
 
             setSuccess(result.successBackend);
             // setFormData("")
@@ -84,16 +105,16 @@ const ForgotPassword = () => {
           }
         } else {
           if (result.status === 400) {
-            console.error(
-              "Unsuccessfully updated password.",
-              await result.text()
-            );
+            setErrors((pre)=>({
+              ...pre,
+              errorBackend:result.error404
+            }))
           }
         }
       } catch (err) {
         // console.log(err.message)
       }
-    } else {
+    } else {      
       setErrors((pre)=>({
         ...pre,
         errorBackend:"Please refresh the page and try again."
@@ -125,7 +146,10 @@ const ForgotPassword = () => {
   };
   return (
     <div>
-      <h1>Recover My Password</h1>
+    <div className="row my-5">
+    <div className="col-md-1"></div>
+      <div className="col-md-5" style={{ border:"1px solid #d3d3d3",borderRadius:"5px" }}>
+      <h2>Reset Password</h2>
       {success && (
         <p className="alert alert-success" style={{ width: "400px" }}>
           {success}
@@ -144,10 +168,11 @@ const ForgotPassword = () => {
           name="email"
           value={formData.email}
           onChange={handleInputChange}
+          style={{ width:"50%",height:"40px",borderRadius:"10px",border:"1px solid #e3e3e3" }}
         />
         {errors.email && (
           <span
-            className="alert alert-warning text-center ml-5"
+            className="alert alert-danger text-center ml-5"
             style={{ width: "400px" }}
           >
             <small>
@@ -164,6 +189,7 @@ const ForgotPassword = () => {
           name="password"
           value={formData.password}
           onChange={handleInputChange}
+          style={{ width:"50%",height:"40px",borderRadius:"10px",border:"1px solid #e3e3e3" }}
         />
         {errors.password && (
           <span
@@ -184,6 +210,7 @@ const ForgotPassword = () => {
           name="confirm_password"
           value={formData.confirm_password}
           onChange={handleInputChange}
+          style={{ width:"50%",height:"40px",borderRadius:"10px",border:"1px solid #e3e3e3" }}
         />
         {errors.confirm_password && (
           <span
@@ -197,8 +224,18 @@ const ForgotPassword = () => {
           </span>
         )}
         <br />
-        <button type="submit">Reset Password</button>
+        <button type="submit"
+        style={{ width:"50%",height:"40px",borderRadius:"10px",border:"1px solid #e3e3e3",marginTop:"5px" }}
+        >Reset Password</button>
       </form>
+      </div>
+      <div className="col-md-5">
+        <img src="/assets/images/security.jpg" width="900px" height="700px" alt=""/>
+      </div>
+      <div className="col-md-1"></div>
+    </div>
+    <div className="row"><Footer /></div>
+     
     </div>
   );
 };

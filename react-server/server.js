@@ -245,6 +245,33 @@ app.post("/login-forgot-password",async (req,res)=>{
   }
 })
 
+app.delete("/profile/delete-account",async(req,res)=>{
+  const {user_id,email}=req.body
+  console.log("user_id->",user_id)
+  //user_activities
+  try {
+    const response1 = await pool.query("DELETE FROM user_activities WHERE user_id=$1",[user_id])
+    console.log("response1->",response1)
+   
+      //users
+    const response2= await pool.query("DELETE FROM users WHERE user_id=$1",[user_id])
+    if(response2.rowCount>0){
+      res.status(200).json({
+        successBackend:"Account Deleted (BACKEND)"
+      })
+    } else{
+      if (response2.status===400){
+        res.json({
+          errorBackend:"Unabled to delete account.(BACKEND)"
+        })
+      }
+    }
+    
+  } catch(err){
+    console.log("BACKEND failed to delete user. INTERNAL NETWOR ERRORS.")
+  }  
+})
+
 app.post("/save-activity/:activity_id", async (req, res, next) => {
   const { activity_id } = req.params;
   const { user_id } = req.body;

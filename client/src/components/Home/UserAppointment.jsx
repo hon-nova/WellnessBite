@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import {useLocation} from 'react-router-dom'
+import Receipt from '../User/Receipt'
 
 const UserAppointment = () => {
    const location= useLocation()
@@ -86,8 +87,10 @@ const UserAppointment = () => {
          >Process</button></div>
          </div>         
      </form>
-      </div>     
-      <span></span>
+      </div>
+   </div>
+   <div className="row">
+      <Receipt />
    </div>
  </div>}
     </div>
