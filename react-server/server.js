@@ -154,8 +154,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-
-
 app.get('/read-saved-activities',async(req,res)=>{
   try {
     const stm=`select * from activities 
@@ -215,6 +213,7 @@ app.post("/change-password", async (req, res) => {
 app.post("/login-forgot-password",async (req,res)=>{
   const {email,password} =req.body
   try{
+    console.log("before updating password")
     const password_h=await bcrypt.hash(password,10)
     const response = await pool.query("SELECT * from users WHERE email=$1",[email])
     if(response.rowCount>0){
@@ -223,6 +222,8 @@ app.post("/login-forgot-password",async (req,res)=>{
         const responseUpdate = await pool.query("UPDATE users SET password=$1 WHERE email=$2 RETURNING *",[password_h,email])
         //check if success
         if(responseUpdate.rowCount >0){
+          console.log("after updating password")
+          console.log("responseUpdate.rowCount->",responseUpdate.rowCount)
           return res.status(200).json({
             successBackend:`Updated Password successfully.`
           })

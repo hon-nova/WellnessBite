@@ -18,9 +18,7 @@ function App() {
   const [users,setUsers]=useState([])
   const fetchUsers=async()=>{
     const response = await fetch('/assets/users.json')
-    const result = await response.json()
-    // console.log("users")
-    // console.log(result)
+    const result = await response.json()    
     setUsers(result)
  }
    useEffect(()=>{     
