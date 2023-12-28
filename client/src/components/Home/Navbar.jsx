@@ -2,12 +2,23 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 
+
 const Navbar = () => {
   const navigateTo = useNavigate();
 
   const [token, setToken] = useState("");
   const { isLoggedIn, email, username, loginSuccess, logout } =
     useContext(AuthContext);
+  const [isHover,setIsHover]=useState(false)
+  const handleMouseHover =()=>{
+    setIsHover(true)
+  }
+  const handleMouseLeave =()=>{
+    setIsHover(false)
+  }
+  const linkStyle = {
+    backgroundColor: isHover ? "yellow":"transparent"
+  }
 
   useEffect(() => {
     const storedToken = sessionStorage.getItem("token");
@@ -58,17 +69,26 @@ const Navbar = () => {
         >
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <Link className="nav-link" to="/activities">
+              <Link className="nav-link" to="/activities"
+             style={ {backgroundColor: isHover?"green":"transparent"} }
+              onMouseEnter={handleMouseHover}
+              onMouseLeave={handleMouseLeave}>
                 ACTIVITIES
               </Link>
             </li>
             <li className="nav-item active">
-              <Link className="nav-link" to="/nutritions">
+              <Link className="nav-link" to="/nutritions"
+              style={ {backgroundColor: isHover?"yellow":"transparent"} }
+              onMouseEnter={handleMouseHover}
+              onMouseLeave={handleMouseLeave}>
                 NUTRITIONS
               </Link>
             </li>
             <li className="nav-item active">
-              <Link className="nav-link" to="/contact-agent">
+              <Link className="nav-link" to="/contact-agent"
+               style={ {backgroundColor: isHover?"pink":"transparent"} }
+              onMouseEnter={handleMouseHover}
+              onMouseLeave={handleMouseLeave}>
                 CONTACT AGENTS
               </Link>
             </li>

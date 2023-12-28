@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
+import Navbar from './Navbar'
 
 const Users = ({users}) => {
    const [selectedCountry,setSelectedCountry]=useState("")
@@ -42,7 +43,8 @@ const handleContact = (user)=>{
 }
   return (  
     <div>
-    <div className="row my-5">
+    <div className="row"><Navbar/></div>
+    <div className="row my-3 mx-5">
       <select 
       value={selectedCountry} 
       onChange={handleDisplayCountries}      

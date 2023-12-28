@@ -32,12 +32,11 @@ const DeleteAccount = () => {
       setSuccess(result.successBackend)
       setTimeout(()=>{
         setSuccess('')
-      },2000)
-     
+      },2000)     
       navigateTo('/')
     } else {
       if (response.status===400){
-        console.log(result.errorBackend)
+        // console.log(result.errorBackend)
         setErrorBackend(result.errorBackend)
       }
     }

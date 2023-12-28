@@ -22,7 +22,6 @@
 
 ![image](public/assets/images/f_five_3.png)
 
-
 ![image](public/assets/images/f_six.png)
 
 ![image](public/assets/images/f_seven.png)
@@ -36,4 +35,8 @@
 ![image](public/assets/images/f_ten.png)
 
 ![image](public/assets/images/f_changepass_2.png)
+
+![image](public/assets/images/f_delete_user.png)
+
+![image](public/assets/images/f_after_delete_user.png)
 
